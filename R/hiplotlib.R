@@ -11,7 +11,6 @@
 #' Report bugs at \url{https://github.com/hiplot/hiplotlib/issues}
 #'
 #' @examples
-#'
 #' @docType package
 #' @name hiplotlib
 NULL
