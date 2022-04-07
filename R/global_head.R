@@ -25,11 +25,15 @@ conf = list(
     vjust = NULL,
     fontsize_row = NULL,
     fontsize_col = NULL,
-    digets = NULL,
+    digets = NULL
   ),
   extra = list()
 )
 attr(conf, which = "reference") = "https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
+
+opt = list(
+  outputFilePrefix = "placeholder"
+)
 
 # Web UI options list, query and setting ----------------------------------
 # conf = globs_get("conf")
