@@ -1,5 +1,35 @@
 # Global objects to inherit web UI options/settings
-#   conf
+#   conf, opt
+
+# https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E
+conf = list(
+  data = list(),
+  dataArg = list(),
+  general = list(
+    cmd = "",
+    imageExportType = c("jpeg", "pdf"),
+    size = list(width = 4, height = 2.5),
+    theme = "theme_bw",
+    palette = "lancet",
+    title = "",
+    alpha = 1,
+    font_family = NULL,
+    title_size = NULL,
+    axis_title_size = NULL,
+    legend_pos = NULL,
+    legend_dir = NULL,
+    legend_title_size = NULL,
+    legendTextSize = NULL,
+    x_axis_angle = NULL,
+    hjust = NULL,
+    vjust = NULL,
+    fontsize_row = NULL,
+    fontsize_col = NULL,
+    digets = NULL,
+  ),
+  extra = list()
+)
+attr(conf, which = "reference") = "https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
 
 # Web UI options list, query and setting ----------------------------------
 # conf = globs_get("conf")
@@ -9,16 +39,22 @@
 # globs_set("conf")
 
 globs_list = function() {
-  list(conf = "conf")
+  c("conf", "opt")
 }
 
 globs_get = function(x) {
+  x = match.arg(x, choices = globs_list())
   y = get(x, envir = .GlobalEnv)
   stopifnot(!is.null(y))
   y
 }
 
 globs_set = function(x, name = NULL) {
+  if (!is.null(name)) {
+    name = match.arg(name, choices = globs_list())
+  } else {
+    x = match.arg(x, choices = globs_list())
+  }
   y = get(x, envir = rlang::caller_env())
   stopifnot(!is.null(y))
   # Reassign to global setting
