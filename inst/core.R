@@ -8,9 +8,6 @@ pacman::p_load(stringr)
 pacman::p_load(callr)
 pacman::p_load(futile.logger)
 
-assign("upload_dir", "/cluster/apps/hiplot/userdata", envir = .GlobalEnv)
-assign("utils_dir", "/cluster/apps/hiplot/web/src/scripts/utils", , envir = .GlobalEnv)
-
 transform_val <- function(func_str, val) {
   if (is.character(func_str) && func_str != "") {
     if (any(sapply(c("+", "-", "*", "/", "%"), function(x) {

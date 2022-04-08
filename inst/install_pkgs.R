@@ -1,3 +1,5 @@
+# Packages required to run some plugins
+
 install.packages("ggcorrplot")
 install.packages("ggExtra")
 install.packages("rgeos")

@@ -126,6 +126,11 @@ globs_set = function(x, name = NULL) {
 set_global_options = function() {
   options(stringsAsFactors = FALSE)
   options(warn = -1)
+
+  suppressWarnings(extrafont::loadfonts(quiet = TRUE))
+
+  assign("upload_dir", "/cluster/apps/hiplot/userdata", envir = .GlobalEnv)
+  assign("utils_dir", "/cluster/apps/hiplot/web/src/scripts/utils", envir = .GlobalEnv)
 }
 
 
