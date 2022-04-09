@@ -1,4 +1,10 @@
+#' Prestored settings and functions related to ggplot2
+#' @name ggplot2
+#' @rdname ggplot2
+NULL
 
+#' @describeIn ggplot2 a vector of ggplot2 themes
+#' @export
 ggplot2_themes <- c(
   "theme_abyss", "theme_blackboard", "theme_lucid", "theme_modern",
   "theme_radar", "theme_radar_dark", "theme_linedraw", "theme_minimal",
@@ -15,6 +21,8 @@ ggplot2_themes <- c(
   "theme_excel_new", "theme_gdocs", "theme_nothing", "theme_prism"
 )
 
+#' @describeIn ggplot2 a list of ggplot2 themes
+#' @export
 ggplot2_themes2 <- list(
   hrbrthemes = c(
     "theme_ipsum_pub", "theme_ft_rc", "theme_modern_rc",
@@ -28,7 +36,10 @@ ggplot2_themes2 <- list(
   ggprism = "theme_prism"
 )
 
-## ggplot color theme
+#' @describeIn ggplot2 Set ggplot2 theme for a ggplot object
+#' @param p a ggplot object.
+#' @param theme a string specifying theme.
+#' @export
 choose_ggplot_theme <- function(p, theme = "theme_bw") {
   if (theme %in% ggplot2_themes) {
     cmd <- sprintf("p = p + %s()", theme)
@@ -42,6 +53,8 @@ choose_ggplot_theme <- function(p, theme = "theme_bw") {
   return(p)
 }
 
+#' @describeIn ggplot2 Return ggplot2 theme based on string
+#' @export
 choose_ggplot_theme2 <- function(theme = "theme_bw") {
   t <- NULL
   if (theme %in% ggplot2_themes) {

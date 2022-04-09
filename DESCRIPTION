@@ -12,10 +12,16 @@ BugReports: https://github.com/hiplot/hiplotlib/issues
 Depends:
     R (>= 3.3.0)
 Imports:
+    cowplot,
+    data.table,
     extrafont,
+    ggplot2,
     glue,
+    pacman,
+    patchwork,
     R.utils,
     rlang,
+    stringr,
     utils
 Suggests: 
     knitr,

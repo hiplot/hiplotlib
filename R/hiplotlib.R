@@ -12,4 +12,7 @@
 #'
 #' @docType package
 #' @name hiplotlib
+#' @importFrom grDevices col2rgb rgb
+#' @importFrom stats na.omit
+#' @importFrom utils packageDescription
 NULL

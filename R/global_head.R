@@ -96,7 +96,7 @@ globs_list = function() {
 #' @export
 globs_get = function(x) {
   x = match.arg(x, choices = globs_list())
-  y = get(x, envir = .GlobalEnv)
+  y = get(x, envir = rlang::global_env())
   stopifnot(!is.null(y))
   y
 }
@@ -115,7 +115,7 @@ globs_set = function(x, name = NULL) {
   stopifnot(!is.null(y))
   # Reassign to global setting
   assign(if (is.null(name)) x else name,
-         y, envir = .GlobalEnv)
+         y, envir = rlang::global_env())
 }
 
 
@@ -129,11 +129,32 @@ set_global_options = function() {
 
   suppressWarnings(extrafont::loadfonts(quiet = TRUE))
 
-  assign("upload_dir", "/cluster/apps/hiplot/userdata", envir = .GlobalEnv)
-  assign("utils_dir", "/cluster/apps/hiplot/web/src/scripts/utils", envir = .GlobalEnv)
+  assign("upload_dir", "/cluster/apps/hiplot/userdata", envir = rlang::global_env())
+  assign("utils_dir", "/cluster/apps/hiplot/web/src/scripts/utils", envir = rlang::global_env())
 }
 
+#' Set general R packages before starting plugin
+#' @export
+set_general_pkgs = function() {
+  pkgs = c("cowplot", "patchwork", "extrafont", "R.utils")
+  sapply(pkgs, function (x)
+    eval(parse(text = "library(x, character.only = TRUE)")))
+  message(sprintf("General packages %s are loaded.",
+                  paste(pkgs, collapse = ", ")))
+}
 
+#' Set extra R packages before starting plugin
+#' @export
+set_extra_pkgs = function() {
+  pkgs = c("reshape2", "ggplot2", "grid", "ggplotify",
+           "Hmisc", "dplyr", "tidyverse", "gplots",
+           "ggthemes", "see", "ggcharts", "ggdist",
+           "ComplexHeatmap", "genefilter", "pheatmap")
+  sapply(pkgs, function (x)
+    eval(parse(text = "library(x, character.only = TRUE)")))
+  message(sprintf("Extra packages %s are loaded.",
+                  paste(pkgs, collapse = ", ")))
+}
 # Conf update -------------------------------------------------------------
 
 #' Check and update global setting before starting plugin
