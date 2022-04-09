@@ -1,7 +1,7 @@
 # Global objects to inherit web UI options/settings
 #   conf, opt
 
-#' Global objects to inherit web UI options/settings
+#' Global objects to inherit web UI options/settings for plugin developer
 #'
 #' These provided objects are containers storing default data and information
 #' send from web UI. To help develop plugins, we mock them so we can type
@@ -106,11 +106,6 @@ globs_get <- function(x) {
 #' This is not recommended.
 #' @export
 globs_set <- function(x, name = NULL) {
-  if (!is.null(name)) {
-    name <- match.arg(name, choices = globs_list())
-  } else {
-    x <- match.arg(x, choices = globs_list())
-  }
   y <- get(x, envir = rlang::caller_env())
   stopifnot(!is.null(y))
   # Reassign to global setting
@@ -165,6 +160,7 @@ set_extra_pkgs <- function() {
     paste(pkgs, collapse = ", ")
   ))
 }
+
 # Conf update -------------------------------------------------------------
 
 #' Check and update global setting before starting plugin
@@ -212,4 +208,26 @@ set_global_confs <- function() {
       }
     }
   }
+}
+
+#' Preprocess the data argument from conf object
+#' @export
+data_arg_preprocess <- function() {
+  conf <- globs_get("conf")
+  on.exit(globs_set("conf"))
+
+  if (is.null(conf$dataArg) || length(conf$dataArg) == 0) {
+    return(NULL)
+  }
+  for (i in 1:length(conf$dataArg)) {
+    for (j in 1:length(conf$dataArg[[i]])) {
+      conf$dataArg[[i]][[j]]$blackItems <- NULL
+      conf$dataArg[[i]][[j]]$required <- NULL
+      conf$dataArg[[i]][[j]]$individual <- NULL
+      conf$dataArg[[i]][[j]]$label <- NULL
+      conf$dataArg[[i]][[j]]$value <- unlist(conf$dataArg[[i]][[j]]$value)
+      conf$dataArg[[i]][[j]]$value[is.null(conf$dataArg[[i]][[j]]$value)] <- ""
+    }
+  }
+  # assign("conf", conf, envir = .GlobalEnv)
 }

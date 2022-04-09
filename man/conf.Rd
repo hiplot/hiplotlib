@@ -4,7 +4,7 @@
 \name{conf}
 \alias{conf}
 \alias{opt}
-\title{Global objects to inherit web UI options/settings}
+\title{Global objects to inherit web UI options/settings for plugin developer}
 \format{
 An object of class \code{list} of length 4.
 

@@ -89,6 +89,7 @@ set_factors <- function(x, rev = FALSE, sort = FALSE) {
   return(x)
 }
 
+# TODO: check this
 #' Capitalize a string
 #' @inheritParams stringr::case
 #' @export
@@ -104,3 +105,34 @@ capitalize <- stringr::str_to_title
 #   ))
 #   return(string)
 # }
+
+# Make sure which version is right
+# get_quant <- function(x) {
+#   return(
+#     c(
+#       min(x),
+#       quantile(x, 0.03),
+#       quantile(x, 0.45),
+#       median(x),
+#       quantile(x, 0.55),
+#       quantile(x, 0.97),
+#       max(x)
+#     )
+#   )
+# }
+
+get_quant <- function(x) {
+  return(
+    c(
+      min(x, na.rm = T),
+      quantile(x, 0.03, na.rm = T),
+      quantile(x, 0.07, na.rm = T),
+      quantile(x, 0.45, na.rm = T),
+      median(x, na.rm = T),
+      quantile(x, 0.55, na.rm = T),
+      quantile(x, 0.93, na.rm = T),
+      quantile(x, 0.97, na.rm = T),
+      max(x, na.rm = T)
+    )
+  )
+}

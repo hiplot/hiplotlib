@@ -477,9 +477,10 @@ mut_cols <- c(
 #' @param filter_names used for filtering.
 #' @export
 draw_map <- function(rds, keyname, filter_names = NULL) {
-  # TODO: There are many global varaibles here, I don't dont if
+  # TODO:  I don't dont if
   # they can work properly.
 
+  script_dir <- get("script_dir", envir = rlang::global_env())
   data[, 2] <- as.numeric(data[, 2])
   colnames(data)[1] <- "region"
   data <- data.table(data)
@@ -552,3 +553,7 @@ draw_map <- function(rds, keyname, filter_names = NULL) {
   export_single(p)
   return(p)
 }
+
+utils::globalVariables(
+  c("region", "long", "lat", "group")
+)
