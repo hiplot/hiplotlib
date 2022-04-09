@@ -33,7 +33,7 @@ Functions to manage the global setting objects
 
 \examples{
 \dontrun{
-conf = globs_get("conf")
+conf <- globs_get("conf")
 # Modify conf
 # xxx
 # Then reassign

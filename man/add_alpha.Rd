@@ -15,5 +15,5 @@ add_alpha(col, alpha)
 Add alpha to color
 }
 \examples{
-add_alpha('red', 0.5)
+add_alpha("red", 0.5)
 }

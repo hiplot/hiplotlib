@@ -3,13 +3,13 @@
 #' @param alpha alpha value, range from 0 to 1.
 #' @export
 #' @examples
-#' add_alpha('red', 0.5)
+#' add_alpha("red", 0.5)
 add_alpha <- function(col, alpha) {
   rgb_col <- unlist(col2rgb(col))
   col.res <- NULL
   for (i in seq_len(ncol(rgb_col))) {
     tmp <- rgb(rgb_col[1, i], rgb_col[2, i], rgb_col[3, i],
-               alpha = alpha * 255, maxColorValue = 255
+      alpha = alpha * 255, maxColorValue = 255
     )
     col.res <- c(col.res, tmp)
   }
@@ -27,11 +27,9 @@ add_alpha <- function(col, alpha) {
 #' @examples
 #' list_same_string_position("abcde", "fbcde")
 #' list_same_string_position("abcde", "fbcde", only_position = FALSE)
-list_same_string_position <- function(
-    a, b,
-    exclude = c("-", "?"),
-    ignore_case = TRUE, show_excluded = FALSE, only_position = TRUE) {
-
+list_same_string_position <- function(a, b,
+                                      exclude = c("-", "?"),
+                                      ignore_case = TRUE, show_excluded = FALSE, only_position = TRUE) {
   if (ignore_case) {
     a <- toupper(a)
     b <- toupper(b)
@@ -79,9 +77,9 @@ colname2data <- function(data) {
 #' set_factors(c("B", "B", "A", "C"), sort = TRUE)
 set_factors <- function(x, rev = FALSE, sort = FALSE) {
   if (sort) {
-    x_uniq = sort(unique(x))
+    x_uniq <- sort(unique(x))
   } else {
-    x_uniq = unique(x)
+    x_uniq <- unique(x)
   }
   if (rev) {
     x <- factor(x, levels = rev(x_uniq))
@@ -96,7 +94,7 @@ set_factors <- function(x, rev = FALSE, sort = FALSE) {
 #' @export
 #' @examples
 #' capitalize("aBcDeF")
-capitalize = stringr::str_to_title
+capitalize <- stringr::str_to_title
 
 # capitalize <- function(string) {
 #   capped <- grep("^[A-Z]", string, invert = TRUE)

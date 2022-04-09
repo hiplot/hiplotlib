@@ -3,42 +3,199 @@
 \docType{data}
 \name{ggplot2}
 \alias{ggplot2}
+\alias{cb_palette}
+\alias{ggsci_palette_names}
+\alias{ggsci_palette_length}
+\alias{brewer_palette_names}
+\alias{prism_palette_names}
+\alias{graf_palette_names}
 \alias{ggplot2_themes}
 \alias{ggplot2_themes2}
 \alias{choose_ggplot_theme}
-\alias{choose_ggplot_theme2}
-\title{Prestored settings and functions related to ggplot2}
+\alias{return_ggplot_theme}
+\alias{position_type}
+\alias{set_palette_theme}
+\alias{set_complex_general_theme}
+\alias{return_hiplot_palette}
+\alias{return_hiplot_palette_color}
+\alias{get_hiplot_color}
+\alias{gg_color_default}
+\alias{brewer_pal_update}
+\alias{transparentColor}
+\alias{custom_color_filter}
+\alias{alter_fun}
+\alias{col_fun_cont}
+\alias{col_tag}
+\alias{mut_cols}
+\alias{draw_map}
+\title{Prestored settings and functions related to ggplot2 or plots}
 \format{
+An object of class \code{character} of length 37.
+
+An object of class \code{character} of length 16.
+
+An object of class \code{numeric} of length 16.
+
+An object of class \code{character} of length 9.
+
+An object of class \code{character} of length 65.
+
+An object of class \code{character} of length 3.
+
 An object of class \code{character} of length 50.
 
 An object of class \code{list} of length 6.
+
+An object of class \code{character} of length 2.
+
+An object of class \code{character} of length 30.
 }
 \usage{
+cb_palette
+
+ggsci_palette_names
+
+ggsci_palette_length
+
+brewer_palette_names
+
+prism_palette_names
+
+graf_palette_names
+
 ggplot2_themes
 
 ggplot2_themes2
 
 choose_ggplot_theme(p, theme = "theme_bw")
 
-choose_ggplot_theme2(theme = "theme_bw")
+return_ggplot_theme(theme = "theme_bw")
+
+position_type(label = c("dodge", "fill", "stack"))
+
+set_palette_theme(p, conf = globs_get("conf"))
+
+set_complex_general_theme(p, conf = globs_get("conf"))
+
+return_hiplot_palette(u, custom = NULL)
+
+return_hiplot_palette_color(u, custom = NULL)
+
+get_hiplot_color(u, n = -1, custom = NULL)
+
+gg_color_default(n)
+
+brewer_pal_update(n, panel = "Set3")
+
+transparentColor(col, alpha = 200)
+
+custom_color_filter(cols)
+
+alter_fun(x, y, w, h, v)
+
+col_fun_cont(
+  x,
+  cols = c("#196ABD", "#3399FF", "#3399FF", "#f4f4f4", "#f4f4f4", "#f4f4f4", "#FF3333",
+    "#FF3333", "#C20B01")
+)
+
+col_tag
+
+mut_cols
+
+draw_map(rds, keyname, filter_names = NULL)
 }
 \arguments{
 \item{p}{a ggplot object.}
 
 \item{theme}{a string specifying theme.}
+
+\item{label}{a position label, one of 'dodge', 'fill' and 'stack'.}
+
+\item{conf}{a conf object, see \link{conf}.}
+
+\item{u}{one of a predefined palette name. See \link{ggsci_palette_names},
+\link{brewer_palette_names}, \link{prism_palette_names}, etc.}
+
+\item{custom}{a user specified custom color vector.}
+
+\item{n}{number of colors.}
+
+\item{panel}{defines the color panel you want}
+
+\item{col}{a color.}
+
+\item{alpha}{a alpha value.}
+
+\item{cols}{colors.}
+
+\item{x, y, w, h, v}{a set of parameters passing to \link[grid:grid.rect]{grid::grid.rect}.}
+
+\item{rds}{a file storing in the format of \code{.RDS}.}
+
+\item{keyname}{a keyname to plot.}
+
+\item{filter_names}{used for filtering.}
 }
 \description{
-Prestored settings and functions related to ggplot2
+Prestored settings and functions related to ggplot2 or plots
 }
 \section{Functions}{
 \itemize{
-\item \code{ggplot2_themes}: a vector of ggplot2 themes
+\item \code{cb_palette}: A vector of colors
 
-\item \code{ggplot2_themes2}: a list of ggplot2 themes
+\item \code{ggsci_palette_names}: A vector of ggsci palette names
+
+\item \code{ggsci_palette_length}: Maximum color number provided by palette of \link{ggsci_palette_names}
+
+\item \code{brewer_palette_names}: A vector of RColorBrewer palette names
+
+\item \code{prism_palette_names}: A vector of prism palette names
+
+\item \code{graf_palette_names}: A vector of graf palette names
+
+\item \code{ggplot2_themes}: A vector of ggplot2 themes
+
+\item \code{ggplot2_themes2}: A list of ggplot2 themes
 
 \item \code{choose_ggplot_theme}: Set ggplot2 theme for a ggplot object
 
-\item \code{choose_ggplot_theme2}: Return ggplot2 theme based on string
+\item \code{return_ggplot_theme}: Return ggplot2 theme based on string
+
+\item \code{position_type}: Return position type
+
+\item \code{set_palette_theme}: Set palette and theme from conf for a ggplot object
+
+\item \code{set_complex_general_theme}: Set complex general theme from conf for a ggplot object
+
+\item \code{return_hiplot_palette}: Return ggplot2 scale of fill palette with predefined or custom colors
+
+\item \code{return_hiplot_palette_color}: Return ggplot2 scale of color palette with predefined or custom colors,
+similar to \link{return_hiplot_palette}
+
+\item \code{get_hiplot_color}: Get colors from a color palette
+
+\item \code{gg_color_default}: A color generator for default colors in ggplot
+
+\item \code{brewer_pal_update}: An update version of brew.pal function
+
+\item \code{transparentColor}: Transparent colors
+
+\item \code{custom_color_filter}: A custom color filter
+
+\item \code{alter_fun}: A alter_fun used in ComplexHeatmap
+
+\item \code{col_fun_cont}: A color function used in ComplexHeatmap
+
+\item \code{col_tag}: A col_tag used in ComplexHeatmap (TODO: make sure)
+
+\item \code{mut_cols}: A mapping between mutation type and colors used in ComplexHeatmap (TODO: make sure)
+
+\item \code{draw_map}: Draw a Map
 }}
 
+\examples{
+transparentColor("red")
+custom_color_filter("AAAAAA, CCCCCC")
+}
 \keyword{datasets}

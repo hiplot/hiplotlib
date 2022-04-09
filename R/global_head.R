@@ -11,7 +11,7 @@
 #' - [Guideline - Data JSON](https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E)
 #' - [后台任务代码说明](https://hiplot.com.cn/docs/zh/development-guides/#%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E)
 #' @export
-conf = list(
+conf <- list(
   data = list(),
   dataArg = list(),
   general = list(
@@ -55,12 +55,12 @@ conf = list(
     background = "#FFFFFF"
   )
 )
-attr(conf, which = "reference") = "https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
+attr(conf, which = "reference") <- "https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
 
 
 #' @rdname conf
 #' @export
-opt = list(
+opt <- list(
   inputFile = "placeholder",
   confFile = "placeholder",
   outputFilePrefix = "placeholder",
@@ -77,7 +77,7 @@ opt = list(
 #' @rdname globs
 #' @examples
 #' \dontrun{
-#' conf = globs_get("conf")
+#' conf <- globs_get("conf")
 #' # Modify conf
 #' # xxx
 #' # Then reassign
@@ -87,16 +87,16 @@ NULL
 
 #' @describeIn globs list available global objects
 #' @export
-globs_list = function() {
+globs_list <- function() {
   c("conf", "opt")
 }
 
 #' @describeIn globs get the data from specified global objects
 #' @param x the name of the global object, the most common used is "conf".
 #' @export
-globs_get = function(x) {
-  x = match.arg(x, choices = globs_list())
-  y = get(x, envir = rlang::global_env())
+globs_get <- function(x) {
+  x <- match.arg(x, choices = globs_list())
+  y <- get(x, envir = rlang::global_env())
   stopifnot(!is.null(y))
   y
 }
@@ -105,17 +105,19 @@ globs_get = function(x) {
 #' @param name if x is not a valid global object name, then specify it with `name`.
 #' This is not recommended.
 #' @export
-globs_set = function(x, name = NULL) {
+globs_set <- function(x, name = NULL) {
   if (!is.null(name)) {
-    name = match.arg(name, choices = globs_list())
+    name <- match.arg(name, choices = globs_list())
   } else {
-    x = match.arg(x, choices = globs_list())
+    x <- match.arg(x, choices = globs_list())
   }
-  y = get(x, envir = rlang::caller_env())
+  y <- get(x, envir = rlang::caller_env())
   stopifnot(!is.null(y))
   # Reassign to global setting
   assign(if (is.null(name)) x else name,
-         y, envir = rlang::global_env())
+    y,
+    envir = rlang::global_env()
+  )
 }
 
 
@@ -123,7 +125,7 @@ globs_set = function(x, name = NULL) {
 
 #' Set R global options before starting plugin
 #' @export
-set_global_options = function() {
+set_global_options <- function() {
   options(stringsAsFactors = FALSE)
   options(warn = -1)
 
@@ -135,40 +137,48 @@ set_global_options = function() {
 
 #' Set general R packages before starting plugin
 #' @export
-set_general_pkgs = function() {
-  pkgs = c("cowplot", "patchwork", "extrafont", "R.utils")
-  sapply(pkgs, function (x)
-    eval(parse(text = "library(x, character.only = TRUE)")))
-  message(sprintf("General packages %s are loaded.",
-                  paste(pkgs, collapse = ", ")))
+set_general_pkgs <- function() {
+  pkgs <- c("cowplot", "patchwork", "extrafont", "R.utils")
+  sapply(pkgs, function(x) {
+    eval(parse(text = "library(x, character.only = TRUE)"))
+  })
+  message(sprintf(
+    "General packages %s are loaded.",
+    paste(pkgs, collapse = ", ")
+  ))
 }
 
 #' Set extra R packages before starting plugin
 #' @export
-set_extra_pkgs = function() {
-  pkgs = c("reshape2", "ggplot2", "grid", "ggplotify",
-           "Hmisc", "dplyr", "tidyverse", "gplots",
-           "ggthemes", "see", "ggcharts", "ggdist",
-           "ComplexHeatmap", "genefilter", "pheatmap")
-  sapply(pkgs, function (x)
-    eval(parse(text = "library(x, character.only = TRUE)")))
-  message(sprintf("Extra packages %s are loaded.",
-                  paste(pkgs, collapse = ", ")))
+set_extra_pkgs <- function() {
+  pkgs <- c(
+    "reshape2", "ggplot2", "grid", "ggplotify",
+    "Hmisc", "dplyr", "tidyverse", "gplots",
+    "ggthemes", "see", "ggcharts", "ggdist",
+    "ComplexHeatmap", "genefilter", "pheatmap"
+  )
+  sapply(pkgs, function(x) {
+    eval(parse(text = "library(x, character.only = TRUE)"))
+  })
+  message(sprintf(
+    "Extra packages %s are loaded.",
+    paste(pkgs, collapse = ", ")
+  ))
 }
 # Conf update -------------------------------------------------------------
 
 #' Check and update global setting before starting plugin
 #' @export
-set_global_confs = function() {
-  conf = globs_get("conf")
+set_global_confs <- function() {
+  conf <- globs_get("conf")
   on.exit(globs_set("conf"))
 
   if (is.null(conf$general$font)) {
-    conf$general$font = "Arial"
+    conf$general$font <- "Arial"
   }
 
   # Update conf from UI to R backend
-  ui_extra2general = c(
+  ui_extra2general <- c(
     font_family = "font",
     family = "font", # TODO 重复了，能否去除？
     title_size = "titleSize",
@@ -187,20 +197,19 @@ set_global_confs = function() {
 
   for (i in names(ui_extra2general)) {
     if (i %in% names(conf$extra)) {
-      conf$general[[ui_extra2general[i]]] = conf$extra[[i]]
-      conf$extra[[i]] = NULL
+      conf$general[[ui_extra2general[i]]] <- conf$extra[[i]]
+      conf$extra[[i]] <- NULL
     }
   }
 
-  ui_general_remap = c(palette_cont = "paletteCont")
+  ui_general_remap <- c(palette_cont = "paletteCont")
 
   for (i in names(ui_general_remap)) {
     if (i %in% names(conf$general)) {
       if (!is.null(conf$general[[ui_general_remap[i]]])) {
-        conf$general[[ui_general_remap[i]]] = conf$general[[i]]
-        conf$general[[i]] = NULL
+        conf$general[[ui_general_remap[i]]] <- conf$general[[i]]
+        conf$general[[i]] <- NULL
       }
     }
   }
-
 }

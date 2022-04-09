@@ -12,14 +12,21 @@ BugReports: https://github.com/hiplot/hiplotlib/issues
 Depends:
     R (>= 3.3.0)
 Imports:
+    circlize,
     cowplot,
     data.table,
     extrafont,
     ggplot2,
+    ggprism,
     glue,
+    gplots,
+    grafify,
+    grid,
     pacman,
     patchwork,
     R.utils,
+    randomcoloR,
+    RColorBrewer,
     rlang,
     stringr,
     utils
