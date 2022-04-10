@@ -1,3 +1,6 @@
+suppressPackageStartupMessages(library(optparse))
+suppressPackageStartupMessages(library(hiplotlib))
+
 initial_options <- commandArgs(trailingOnly = FALSE)
 file_arg_name <- "--file="
 script_name <- sub(
@@ -5,6 +8,7 @@ script_name <- sub(
   initial_options[grep(file_arg_name, initial_options)]
 )
 script_dir <<- dirname(script_name)
+
 ow <- getwd()
 renv_dir <- file.path(script_dir, "../../")
 if (file.exists(file.path(renv_dir, ".Rprofile"))) {
@@ -12,9 +16,7 @@ if (file.exists(file.path(renv_dir, ".Rprofile"))) {
   source(".Rprofile")
 }
 setwd(ow)
-source(file.path(script_dir, "core.R"))
-source(file.path(script_dir, "color.R"))
-require(optparse)
+
 # options
 option_list <- list(
   make_option(c("-i", "--inputFile"),
@@ -52,8 +54,8 @@ option_list <- list(
 opt <<- parse_args(OptionParser(option_list = option_list))
 
 if (!opt$simple) {
-  source(file.path(script_dir, "lib.R"))
-  library_extra_pkgs()
+  #source(file.path(script_dir, "lib.R"))
+  set_extra_pkgs()
 }
 
 outlog_dir <- file.path(dirname(opt$outputFilePrefix), "log")

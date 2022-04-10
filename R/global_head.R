@@ -63,11 +63,11 @@ attr(conf, which = "reference") <- "https://hiplot.com.cn/docs/zh/development-gu
 opt <- list(
   inputFile = "placeholder",
   confFile = "placeholder",
-  outputFilePrefix = "placeholder",
+  outputFilePrefix = file.path(tempdir(), uuid::UUIDgenerate()),
   tool = "placeholder",
-  module = "placeholder",
-  simple = "placeholder",
-  enableExample = "placeholder"
+  module = "basic",
+  simple = TRUE,
+  enableExample = TRUE
 )
 
 # Web UI options list, query and setting ----------------------------------
@@ -153,7 +153,7 @@ set_extra_pkgs <- function() {
     "ComplexHeatmap", "genefilter", "pheatmap"
   )
   sapply(pkgs, function(x) {
-    eval(parse(text = "library(x, character.only = TRUE)"))
+    eval(parse(text = "pacman::p_load(x, character.only = TRUE)"))
   })
   message(sprintf(
     "Extra packages %s are loaded.",

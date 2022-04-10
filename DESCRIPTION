@@ -40,10 +40,12 @@ Imports:
     sessioninfo,
     stringr,
     utils,
+    uuid,
     webshot,
     xfun
 Suggests: 
     knitr,
+    pacman,
     prettydoc,
     rmarkdown,
     testthat

@@ -170,8 +170,7 @@ eval_parse_codes <- function() {
   # )
 
   script_dir <- get("script_dir", envir = rlang::global_env())
-  conf <- globs_get("conf")
-  assign("conf", conf, envir = rlang::caller_env())
+  assign("conf", globs_get("conf"), envir = rlang::caller_env())
   keep_vars <- c(
     "pkgs",
     paste0("data", 1:10), paste0("dat", 1:10), paste0("res", 1:10),
@@ -180,11 +179,11 @@ eval_parse_codes <- function() {
     "conf", "data", "p", "wb", "dat", "cem", "res", "pobj"
   )
   assign("keep_vars", keep_vars, envir = rlang::caller_env())
+  rm(keep_vars, envir = rlang::current_env())
 
   start_task <- function() {
     sourceR <- sprintf("%s/%s/source.R", script_dir, opt$tool)
     loadSourceR <- file.exists(sourceR)
-    source(sprintf("%s/head.R", script_dir))
     if (loadSourceR) source(sourceR)
     entry <- sprintf("%s/%s/%s.R", script_dir, opt$tool, c("plot", "start", "entry"))
     entry <- entry[file.exists(entry)]
@@ -195,7 +194,6 @@ eval_parse_codes <- function() {
   } else {
     start_task()
   }
-  source(sprintf("%s/foot.R", script_dir))
   if (!is.null(conf$steps$id) && length(conf$steps$id) > 0) {
     logfile <- file.path(dirname(opt$outputFilePrefix), "task.log")
     if (!file.exists(logfile)) file.create(logfile)
@@ -224,10 +222,15 @@ eval_parse_codes <- function() {
 
 #' Run hiplot
 #' @export
-run_hiplot <- function() {
+run_hiplot <- function(opt = globs_get("opt")) {
   conf <<- read_json(opt$confFile, simplifyVector = F)
+
+  set_global_options()
+  set_general_pkgs()
+
   checkExample()
   initSteps()
+  set_global_confs()
   data_arg_preprocess()
   hiplot_preprocess()
   eval_parse_codes()
