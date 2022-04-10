@@ -112,7 +112,7 @@ draw_map(rds, keyname, filter_names = NULL)
 
 \item{label}{a position label, one of 'dodge', 'fill' and 'stack'.}
 
-\item{conf}{a conf object, see \link{conf}.}
+\item{conf}{a conf object, see \link{.conf}.}
 
 \item{u}{one of a predefined palette name. See \link{ggsci_palette_names},
 \link{brewer_palette_names}, \link{prism_palette_names}, etc.}

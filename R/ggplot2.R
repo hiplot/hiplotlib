@@ -132,7 +132,7 @@ position_type <- function(label = c("dodge", "fill", "stack")) {
 }
 
 #' @describeIn ggplot2 Set palette and theme from conf for a ggplot object
-#' @param conf a conf object, see [conf].
+#' @param conf a conf object, see [.conf].
 #' @export
 set_palette_theme <- function(p, conf = globs_get("conf")) {
   ## add color palette

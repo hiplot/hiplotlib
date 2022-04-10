@@ -6,6 +6,9 @@
 \usage{
 run_hiplot(opt = globs_get("opt"))
 }
+\arguments{
+\item{opt}{option list}
+}
 \description{
 Run hiplot
 }

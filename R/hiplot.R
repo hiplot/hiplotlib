@@ -166,7 +166,7 @@ eval_parse_codes <- function() {
     get("script_dir", envir = rlang::global_env())
   )
   conf <<- get("conf", envir = .GlobalEnv)
-  keep_vars <<- c(
+  keep_vars <- c(
     "pkgs",
     paste0("data", 1:10), paste0("dat", 1:10), paste0("res", 1:10),
     paste0("pobj", 1:10000),
@@ -213,6 +213,7 @@ eval_parse_codes <- function() {
 }
 
 #' Run hiplot
+#' @param opt option list
 #' @export
 #' @examples
 #' \dontrun{
