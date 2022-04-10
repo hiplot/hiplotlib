@@ -5,3 +5,7 @@
 ^data-raw$
 .travis.yml
 Makefile
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+inst/extdata/ezcox/result

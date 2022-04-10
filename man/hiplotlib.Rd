@@ -7,9 +7,6 @@
 \description{
 Infrastructure functions for Hiplot plot system.
 }
-\examples{
-
-}
 \seealso{
 Useful links:
 
