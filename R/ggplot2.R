@@ -480,7 +480,10 @@ draw_map <- function(rds, keyname, filter_names = NULL) {
   # TODO:  I don't dont if
   # they can work properly.
 
-  script_dir <- get("script_dir", envir = rlang::global_env())
+  script_dir <- getOption(
+    "hiplotlib.script_dir",
+    get("script_dir", envir = rlang::global_env())
+  )
   data[, 2] <- as.numeric(data[, 2])
   colnames(data)[1] <- "region"
   data <- data.table(data)

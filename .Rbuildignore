@@ -8,3 +8,4 @@ Makefile
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+inst/extdata/ezcox/result

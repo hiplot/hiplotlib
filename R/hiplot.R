@@ -160,26 +160,19 @@ print_sessioninfo <- function() {
 
 eval_parse_codes <- function() {
   # TODO check if proper
-  # conf <<- get("conf", envir = .GlobalEnv)
-  # keep_vars <<- c(
-  #   "pkgs",
-  #   paste0("data", 1:10), paste0("dat", 1:10), paste0("res", 1:10),
-  #   paste0("pobj", 1:10000),
-  #   paste0("p", 1:10000), paste0("wb", 1:10000),
-  #   "conf", "data", "p", "wb", "dat", "cem", "res", "pobj"
-  # )
 
-  script_dir <- get("script_dir", envir = rlang::global_env())
-  assign("conf", globs_get("conf"), envir = rlang::caller_env())
-  keep_vars <- c(
+  script_dir <- getOption(
+    "hiplotlib.script_dir",
+    get("script_dir", envir = rlang::global_env())
+  )
+  conf <<- get("conf", envir = .GlobalEnv)
+  keep_vars <<- c(
     "pkgs",
     paste0("data", 1:10), paste0("dat", 1:10), paste0("res", 1:10),
     paste0("pobj", 1:10000),
     paste0("p", 1:10000), paste0("wb", 1:10000),
     "conf", "data", "p", "wb", "dat", "cem", "res", "pobj"
   )
-  assign("keep_vars", keep_vars, envir = rlang::caller_env())
-  rm(keep_vars, envir = rlang::current_env())
 
   start_task <- function() {
     sourceR <- sprintf("%s/%s/source.R", script_dir, opt$tool)
@@ -217,17 +210,31 @@ eval_parse_codes <- function() {
   vars <- vars[vars %in% keep_vars]
   conf$steps <<- NULL
   save(list = vars, file = paste0(out_prefix, ".Rdata"))
-  rm(list = vars, envir = .GlobalEnv)
 }
 
 #' Run hiplot
 #' @export
+#' @examples
+#' \dontrun{
+#' basedir = system.file("extdata", "ezcox", package = "hiplotlib")
+#' opt = list(inputFile = file.path(basedir, "data.txt"),
+#'            confFile = file.path(basedir, "data.json"),
+#'            outputFilePrefix = file.path(basedir, "result/test"),
+#'            tool = "ezcox",
+#'            module = "basic",
+#'            simple = FALSE,
+#'            enableExample = TRUE,
+#'            help = FALSE)
+#' dir.create(dirname(opt$outputFilePrefix))
+#' dir.create(file.path(dirname(opt$outputFilePrefix), "log"))
+#' options(hiplotlib.script_dir = dirname(basedir))
+#' run_hiplot()
+#' }
 run_hiplot <- function(opt = globs_get("opt")) {
   conf <<- read_json(opt$confFile, simplifyVector = F)
 
   set_global_options()
   set_general_pkgs()
-
   checkExample()
   initSteps()
   set_global_confs()

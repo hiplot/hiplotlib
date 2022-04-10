@@ -1,17 +1,17 @@
 # Global objects to inherit web UI options/settings
 #   conf, opt
 
-#' Global objects to inherit web UI options/settings for plugin developer
+#' Mocked global objects to inherit web UI options/settings for plugin developer
 #'
 #' These provided objects are containers storing default data and information
 #' send from web UI. To help develop plugins, we mock them so we can type
 #' it in R(Studio) and access the available fields.
-#'
+#' @rdname conf
 #' @references
 #' - [Guideline - Data JSON](https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E)
 #' - [后台任务代码说明](https://hiplot.com.cn/docs/zh/development-guides/#%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E)
 #' @export
-conf <- list(
+.conf <- list(
   data = list(),
   dataArg = list(),
   general = list(
@@ -55,12 +55,12 @@ conf <- list(
     background = "#FFFFFF"
   )
 )
-attr(conf, which = "reference") <- "https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
+attr(.conf, which = "reference") <- "https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
 
 
 #' @rdname conf
 #' @export
-opt <- list(
+.opt <- list(
   inputFile = "placeholder",
   confFile = "placeholder",
   outputFilePrefix = file.path(tempdir(), uuid::UUIDgenerate()),
@@ -96,7 +96,11 @@ globs_list <- function() {
 #' @export
 globs_get <- function(x) {
   x <- match.arg(x, choices = globs_list())
-  y <- get(x, envir = rlang::global_env())
+  y <- tryCatch(get(x, envir = rlang::global_env()),
+                error = function(e) {
+                  message("This should only show when developing plugin, if you see this message in run mode, please check")
+                  get(paste0(".", x), envir = rlang::global_env())
+                })
   stopifnot(!is.null(y))
   y
 }
@@ -153,7 +157,7 @@ set_extra_pkgs <- function() {
     "ComplexHeatmap", "genefilter", "pheatmap"
   )
   sapply(pkgs, function(x) {
-    eval(parse(text = "pacman::p_load(x, character.only = TRUE)"))
+    eval(parse(text = "library(x, character.only = TRUE)"))
   })
   message(sprintf(
     "Extra packages %s are loaded.",
@@ -231,3 +235,14 @@ data_arg_preprocess <- function() {
   }
   # assign("conf", conf, envir = .GlobalEnv)
 }
+
+
+# Init opt and conf from global environment --------------------------
+# init_global_opts = function() {
+#   conf = globs_get("conf")
+#   opt = globs_get("opt")
+#   assign("conf", conf, envir = rlang::caller_env())
+#   assign("opt", opt, envir = rlang::caller_env())
+# }
+
+

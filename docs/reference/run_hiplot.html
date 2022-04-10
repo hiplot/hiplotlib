@@ -48,11 +48,31 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">run_hiplot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">run_hiplot</span><span class="op">(</span>opt <span class="op">=</span> <span class="fu"><a href="globs.html">globs_get</a></span><span class="op">(</span><span class="st">"opt"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
 
-  </main></div>
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
+<span class="r-in"><span class="va">basedir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"ezcox"</span>, package <span class="op">=</span> <span class="st">"hiplotlib"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">opt</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>inputFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">basedir</span>, <span class="st">"data.txt"</span><span class="op">)</span>,</span>
+<span class="r-in">           confFile <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">basedir</span>, <span class="st">"data.json"</span><span class="op">)</span>,</span>
+<span class="r-in">           outputFilePrefix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">basedir</span>, <span class="st">"result/test"</span><span class="op">)</span>,</span>
+<span class="r-in">           tool <span class="op">=</span> <span class="st">"ezcox"</span>,</span>
+<span class="r-in">           module <span class="op">=</span> <span class="st">"basic"</span>,</span>
+<span class="r-in">           simple <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span class="r-in">           enableExample <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span class="r-in">           help <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">opt</span><span class="op">$</span><span class="va">outputFilePrefix</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">opt</span><span class="op">$</span><span class="va">outputFilePrefix</span><span class="op">)</span>, <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>hiplotlib.script_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">basedir</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu">run_hiplot</span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in"><span class="op">}</span></span>
+</code></pre></div>
+    </div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
