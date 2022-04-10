@@ -1,10 +1,8 @@
+#!/usr/bin/env Rscript
+
 suppressPackageStartupMessages(library(optparse))
 suppressPackageStartupMessages(library(hiplotlib))
 
-# initial_options = c("/Library/Frameworks/R.framework/Resources/bin/exec/R", "--no-echo",
-#                     "--no-restore", "--file=run.R", "--args", "-c", "extdata/ezcox/data.json",
-#                     "-i", "extdata/ezcox/data.txt", "-o", "extdata/ezcox/test", "-t",
-#                     "extdata/ezcox", "--enableExample")
 initial_options <- commandArgs(trailingOnly = FALSE)
 
 file_arg_name <- "--file="
