@@ -284,3 +284,55 @@ import_images_to_pdf <- function(pdfs) {
   }
   return(list(ret = ret, all_tmp_pdf = all_tmp_pdf))
 }
+
+#' @describeIn transform value
+#' @export
+transform_val <- function(func_str, val) {
+  if (is.character(func_str) && func_str != "") {
+    if (any(sapply(c("+", "-", "*", "/", "%"), function(x) {
+      str_detect(func_str, fixed(x))
+    }))) {
+      val <- eval(parse(text = sprintf("val%s", func_str)))
+    } else {
+      val <- eval(parse(text = sprintf("%s(val)", func_str)))
+    }
+  }
+  return(val)
+}
+
+#' @describeIn run shell command
+#' @export
+system_safe <- function(cmd, print_cmd = FALSE) {
+  if (print_cmd) {
+    flog.info(str_remove_all(cmd, "/cluster/apps/hiplot/userdata|/cluster/apps/hiplot/web/src/scripts"))
+  }
+  stderr_fn <- tempfile()
+  stdout_fn <- tempfile()
+  status <- r_safe(
+    function(cmd) {
+      system(cmd)
+    },
+    args = list(cmd),
+    stderr = stderr_fn,
+    stdout = stdout_fn
+  )
+  if (status != 0) {
+    stop(str_replace_all(
+      paste0(readLines(stderr_fn), collapse = "\n"),
+      get("upload_dir", envir = .GlobalEnv), ""
+    ))
+  } else {
+    cat(str_replace_all(
+      paste0(readLines(stdout_fn), collapse = "\n"),
+      get("upload_dir", envir = .GlobalEnv), ""
+    ),
+    append = TRUE
+    )
+    cat(str_replace_all(
+      paste0(readLines(stderr_fn), collapse = "\n"),
+      get("upload_dir", envir = .GlobalEnv), ""
+    ),
+    append = TRUE
+    )
+  }
+}

@@ -1,51 +1,3 @@
-transform_val <- function(func_str, val) {
-  if (is.character(func_str) && func_str != "") {
-    if (any(sapply(c("+", "-", "*", "/", "%"), function(x) {
-      str_detect(func_str, fixed(x))
-    }))) {
-      val <- eval(parse(text = sprintf("val%s", func_str)))
-    } else {
-      val <- eval(parse(text = sprintf("%s(val)", func_str)))
-    }
-  }
-  return(val)
-}
-
-system_safe <- function(cmd, print_cmd = FALSE) {
-  if (print_cmd) {
-    flog.info(str_remove_all(cmd, "/cluster/apps/hiplot/userdata|/cluster/apps/hiplot/web/src/scripts"))
-  }
-  stderr_fn <- tempfile()
-  stdout_fn <- tempfile()
-  status <- r_safe(
-    function(cmd) {
-      system(cmd)
-    },
-    args = list(cmd),
-    stderr = stderr_fn,
-    stdout = stdout_fn
-  )
-  if (status != 0) {
-    stop(str_replace_all(
-      paste0(readLines(stderr_fn), collapse = "\n"),
-      get("upload_dir", envir = .GlobalEnv), ""
-    ))
-  } else {
-    cat(str_replace_all(
-      paste0(readLines(stdout_fn), collapse = "\n"),
-      get("upload_dir", envir = .GlobalEnv), ""
-    ),
-    append = TRUE
-    )
-    cat(str_replace_all(
-      paste0(readLines(stderr_fn), collapse = "\n"),
-      get("upload_dir", envir = .GlobalEnv), ""
-    ),
-    append = TRUE
-    )
-  }
-}
-
 omitCondition <- function(x) {
   return(all(is.na(x) | x == "" | x == " "))
 }
@@ -92,6 +44,44 @@ checkExample <- function() {
       }
     }
   }
+}
+
+format_conf_opt <- function () {
+  if (is.null(conf$general$font)) {
+    conf$general$font <- "Arial"
+  }
+  # convert old config
+  ref <- c(font_family = "font",
+    family = 'font', 
+    title_size = "titleSize",
+    axis_title_size = "axisTitleSize",
+    legend_pos = "legendPos", legend_dir = "legendDir",
+    legend_title_size = "legendTitleSize",
+    legendTextSize = "legendTextSize",
+    x_axis_angle = "xAxisTextAngle",
+    hjust = "xAxisHjust",
+    vjust = "xAxisVjust",
+    fontsize_row = "fontsizeRow",
+    fontsize_col = "fontsizeCol",
+    digets = "digets")
+
+  for (i in names(ref)) {
+    if (i %in% names(conf$extra)) {
+      conf$general[[ref[i]]] <- conf$extra[[i]]
+      conf$extra[[i]] <- NULL
+    }
+  }
+  ref2 <- c(palette_cont = "paletteCont")
+  for (i in names(ref2)) {
+    if (i %in% names(conf$general)) {
+      if (!is.null(conf$general[[ref2[i]]])) {
+        conf$general[[ref2[i]]] = conf$general[[i]]
+        conf$general[[i]] <- NULL
+      }
+    }
+  }
+  globs_set("conf")
+  globs_set("opt")
 }
 
 hiplot_preprocess <- function() {
@@ -146,7 +136,7 @@ hiplot_preprocess <- function() {
         }
       }
     }
-    conf <<- conf
+    globs_set("conf")
   })
 }
 
@@ -158,41 +148,15 @@ print_sessioninfo <- function() {
   cat(session_info, sep = "\n")
 }
 
-eval_parse_codes <- function() {
-  # TODO check if proper
-
-  script_dir <- getOption(
-    "hiplotlib.script_dir",
-    get("script_dir", envir = rlang::global_env())
-  )
-  conf <<- get("conf", envir = .GlobalEnv)
-  keep_vars <- c(
-    "pkgs",
-    paste0("data", 1:10), paste0("dat", 1:10), paste0("res", 1:10),
-    paste0("pobj", 1:10000),
-    paste0("p", 1:10000), paste0("wb", 1:10000),
-    "conf", "data", "p", "wb", "dat", "cem", "res", "pobj"
-  )
-
-  start_task <- function() {
-    sourceR <- sprintf("%s/%s/source.R", script_dir, opt$tool)
-    loadSourceR <- file.exists(sourceR)
-    if (loadSourceR) source(sourceR)
-    entry <- sprintf("%s/%s/%s.R", script_dir, opt$tool, c("plot", "start", "entry"))
-    entry <- entry[file.exists(entry)]
-    sapply(entry, source)
-  }
-  if (length(conf$steps$id) == 2) {
-    new_task_step("core-steps", "en:Analysis/Plotting;zh_cn:分析/绘图", start_task)
-  } else {
-    start_task()
-  }
-  if (!is.null(conf$steps$id) && length(conf$steps$id) > 0) {
-    logfile <- file.path(dirname(opt$outputFilePrefix), "task.log")
-    if (!file.exists(logfile)) file.create(logfile)
-    stepslog <- sprintf("%s/log/%s.log", dirname(opt$outputFilePrefix), conf$steps$id)
-    system(sprintf("cat %s >> %s", paste0(stepslog, collapse = " "), logfile))
-  }
+start_task <- function() {
+  format_conf_opt()
+  sourceR <- sprintf("%s/%s/source.R", script_dir, opt$tool)
+  loadSourceR <- file.exists(sourceR)
+  if (loadSourceR) source(sourceR)
+  entry <- sprintf("%s/%s/%s.R", script_dir,
+    opt$tool, c("plot", "start", "entry"))
+  entry <- entry[file.exists(entry)]
+  sapply(entry, source)
   tmp_pdfs <- list.files(
     dirname(opt$outputFilePrefix),
     "Rplots[0-9]*.pdf",
@@ -205,6 +169,37 @@ eval_parse_codes <- function() {
   )
   if (length(tmp_pdfs) > 0) file.remove(tmp_pdfs)
   if (length(tmp_pdfs2) > 0) file.remove(tmp_pdfs2)
+}
+
+eval_parse_codes <- function() {
+  script_dir <- getOption(
+    "hiplotlib.script_dir",
+    get("script_dir", envir = rlang::global_env())
+  )
+  conf <<- getOption(
+    "hiplotlib.conf",
+    get("conf", envir = rlang::global_env())
+  )
+
+  if (length(conf$steps$id) == 2) {
+    new_task_step("core-steps", "en:Analysis/Plotting;zh_cn:分析/绘图",
+      start_task)
+  } else {
+    start_task()
+  }
+  new_task_step(
+    "done", "en:Sessioninfo (R);zh_cn:运行环境 (R)",
+    function() {
+      flog.info(sprintf("Task done: %s/%s.", opt$module, opt$tool))
+      print_sessioninfo()
+    }
+  )
+  if (!is.null(conf$steps$id) && length(conf$steps$id) > 0) {
+    logfile <- file.path(dirname(opt$outputFilePrefix), "task.log")
+    if (!file.exists(logfile)) file.create(logfile)
+    stepslog <- sprintf("%s/log/%s.log", dirname(opt$outputFilePrefix), conf$steps$id)
+    system(sprintf("cat %s >> %s", paste0(stepslog, collapse = " "), logfile))
+  }
   vars <- ls(envir = .GlobalEnv)
   out_prefix <- opt$outputFilePrefix
   vars <- vars[vars %in% keep_vars]
@@ -233,6 +228,13 @@ eval_parse_codes <- function() {
 #' }
 run_hiplot <- function(opt = globs_get("opt")) {
   conf <<- read_json(opt$confFile, simplifyVector = F)
+  keep_vars <<- c(
+    "pkgs",
+    paste0("data", 1:10), paste0("dat", 1:10), paste0("res", 1:10),
+    paste0("pobj", 1:10000),
+    paste0("p", 1:10000), paste0("wb", 1:10000),
+    "conf", "data", "p", "wb", "dat", "cem", "res", "pobj"
+  )
 
   set_global_options()
   set_general_pkgs()
@@ -242,14 +244,5 @@ run_hiplot <- function(opt = globs_get("opt")) {
   data_arg_preprocess()
   hiplot_preprocess()
   eval_parse_codes()
-
-  new_task_step(
-    "done", "en:Sessioninfo (R);zh_cn:运行环境 (R)",
-    function() {
-      flog.info(sprintf("Task done: %s/%s.", opt$module, opt$tool))
-      print_sessioninfo()
-    }
-  )
-
   return("")
 }
