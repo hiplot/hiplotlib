@@ -1,7 +1,3 @@
-omitCondition <- function(x) {
-  return(all(is.na(x) | x == "" | x == " "))
-}
-
 initSteps <- function() {
   # read in configuration file
   if (!is.null(conf$tool)) {
@@ -52,7 +48,8 @@ format_conf_opt <- function () {
   }
   # convert old config
   ref <- c(font_family = "font",
-    family = 'font', 
+    family = "font", 
+    digets = "digits",
     title_size = "titleSize",
     axis_title_size = "axisTitleSize",
     legend_pos = "legendPos", legend_dir = "legendDir",
@@ -63,7 +60,7 @@ format_conf_opt <- function () {
     vjust = "xAxisVjust",
     fontsize_row = "fontsizeRow",
     fontsize_col = "fontsizeCol",
-    digets = "digets")
+    digits = "digits")
 
   for (i in names(ref)) {
     if (i %in% names(conf$extra)) {
@@ -143,7 +140,7 @@ hiplot_preprocess <- function() {
 print_sessioninfo <- function() {
   session_info <- as.character(sessioninfo::session_info())
   session_info <- sapply(session_info, function(x) {
-    str_replace_all(x, "/cluster/home/public/opt|/cluster/apps/hiplot", "")
+    str_replace_all(x, "/cluster/home/public/opt|/cluster/apps/hiplot|/cluster/home", "")
   })
   cat(session_info, sep = "\n")
 }
