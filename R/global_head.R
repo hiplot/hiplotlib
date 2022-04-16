@@ -47,7 +47,7 @@
     xAxisVjust = 1,
     fontsizeRow = 10,
     fontsizeCol = 10,
-    digets = 2,
+    digits = 2,
     alpha = 1,
     titleSize = 12
   ),
@@ -192,7 +192,7 @@ set_global_confs <- function() {
     vjust = "xAxisVjust",
     fontsize_row = "fontsizeRow",
     fontsize_col = "fontsizeCol",
-    digets = "digets"
+    digits = "digits"
   )
 
   for (i in names(ui_extra2general)) {
