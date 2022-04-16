@@ -1,4 +1,6 @@
-#' @describeIn run shell command
+#' Run system commands
+#' @param cmd the command to run.
+#' @param print_cmd if `TRUE`, also print the command.
 #' @export
 system_safe <- function(cmd, print_cmd = FALSE) {
   if (print_cmd) {
