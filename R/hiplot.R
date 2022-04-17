@@ -177,7 +177,6 @@ eval_parse_codes <- function() {
     "hiplotlib.conf",
     get("conf", envir = rlang::global_env())
   )
-
   if (length(conf$steps$id) == 2) {
     new_task_step("core-steps", "en:Analysis/Plotting;zh_cn:分析/绘图",
       start_task)
@@ -224,6 +223,7 @@ eval_parse_codes <- function() {
 #' run_hiplot()
 #' }
 run_hiplot <- function(opt = globs_get("opt")) {
+  init_vars <<- ls()
   conf <<- read_json(opt$confFile, simplifyVector = F)
   keep_vars <<- c(
     "pkgs",
@@ -232,14 +232,23 @@ run_hiplot <- function(opt = globs_get("opt")) {
     paste0("p", 1:10000), paste0("wb", 1:10000),
     "conf", "data", "p", "wb", "dat", "cem", "res", "pobj"
   )
-
-  set_global_options()
-  set_general_pkgs()
-  checkExample()
-  initSteps()
-  set_global_confs()
-  data_arg_preprocess()
-  hiplot_preprocess()
-  eval_parse_codes()
+  tryCatch({
+    set_global_options()
+    set_general_pkgs()
+    checkExample()
+    initSteps()
+    set_global_confs()
+    data_arg_preprocess()
+    hiplot_preprocess()
+    eval_parse_codes()
+  }, error = function(e) {
+    vars <- ls()
+    rm(list=vars[!vars %in% init_vars])
+    stop(e)
+  }, finally = function(){
+    vars <- ls()
+    rm(list=vars[!vars %in% init_vars])
+  })
+  gc()
   return("")
 }
