@@ -223,7 +223,7 @@ eval_parse_codes <- function() {
 #' run_hiplot()
 #' }
 run_hiplot <- function(opt = globs_get("opt")) {
-  init_vars <<- ls()
+  init_vars <<- ls(envir = .GlobalEnv)
   conf <<- read_json(opt$confFile, simplifyVector = F)
   keep_vars <<- c(
     "pkgs",
@@ -242,13 +242,13 @@ run_hiplot <- function(opt = globs_get("opt")) {
     hiplot_preprocess()
     eval_parse_codes()
   }, error = function(e) {
-    vars <- ls()
-    rm(list=vars[!vars %in% init_vars])
+    vars <- ls(envir = .GlobalEnv)
+    vars <- vars[vars != "e"]
+    rm(list=vars[!vars %in% init_vars || vars %in% keep_vars])
     stop(e)
-  }, finally = function(){
-    vars <- ls()
-    rm(list=vars[!vars %in% init_vars])
   })
+  vars <- ls(envir = .GlobalEnv)
+  rm(list=vars[!vars %in% init_vars || vars %in% keep_vars])
   gc()
   return("")
 }
