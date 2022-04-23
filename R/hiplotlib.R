@@ -15,7 +15,7 @@
 #' @importFrom gplots colorpanel
 #' @importFrom grDevices col2rgb rgb colorRampPalette rainbow hcl cairo_pdf
 #' @importFrom stats na.omit median quantile
-#' @importFrom utils packageDescription head str
+#' @importFrom utils packageDescription head str packageVersion
 #' @importFrom stringr fixed str_split str_replace_all str_detect str_length str_remove_all str_sub
 #' @importFrom grid grid.rect gpar
 #' @importFrom data.table data.table fread setkey

@@ -147,10 +147,11 @@ export_directory <- function(outdir = "output", pdf_tb_subdir = c("output", "out
     saveWorkbook(wb, out_xlsx, overwrite = TRUE)
   }
   if (dir.exists(outdir)) {
+    Sys.sleep(2)
     owd <- getwd()
     setwd(outdir)
     system_safe(sprintf(
-      "tar -czv * -f %s.addition.tar.gz",
+      "tar -czv * --warning=no-file-changed -f %s.addition.tar.gz",
       opt$outputFilePrefix
     ))
     setwd(owd)

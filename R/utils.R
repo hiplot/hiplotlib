@@ -136,3 +136,26 @@ get_quant <- function(x) {
     )
   )
 }
+
+omitCondition <- function(x) {
+  return(all(is.na(x) | x == "" | x == " "))
+}
+
+#' Transform value
+#' @name transform
+#' @rdname transform
+#' @param func_str a string represents a function.
+#' @param val value passing to function
+#' @export
+transform_val <- function(func_str, val) {
+  if (is.character(func_str) && func_str != "") {
+    if (any(sapply(c("+", "-", "*", "/", "%"), function(x) {
+      str_detect(func_str, fixed(x))
+    }))) {
+      val <- eval(parse(text = sprintf("val%s", func_str)))
+    } else {
+      val <- eval(parse(text = sprintf("%s(val)", func_str)))
+    }
+  }
+  return(val)
+}
