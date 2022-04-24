@@ -28,5 +28,5 @@
 #' @importFrom htmlwidgets saveWidget
 #' @importFrom webshot webshot
 #' @importFrom callr r_safe
-#' @import ggplot2
+#' @import ggplot2 R.utils optparse patchwork uuid
 NULL
