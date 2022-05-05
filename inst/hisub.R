@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 # Hiplot 插件提交器
-# Copyright @ 2021 Hiplot team
+# Copyright @ 2021-2022 Hiplot team
 # 工作原理：
 # 1. 读入文件
 # 2. 移除无关行
@@ -10,7 +10,7 @@
 # 6. 基于配置和输入文件生成 plot.R
 #
 # ./hisub.R examples/helloworld.R test_hello
-VERSION <- 0.3
+VERSION <- 0.4
 
 TEMPLATE <- '# @hiplot start
 # @appname helloworld
@@ -107,7 +107,7 @@ if (length(Args) == 0) {
   message("Usage:")
   message("\t`hisub template` to generate a template.")
   message("\t`hisub source.R [...] [outdir]` to convert R script to Hiplot plugin.")
-  message("\nDetails see <https://github.com/hiplot/hiplot-plugin-generator>")
+  message("\nDetails see <https://github.com/hiplot/hiplotlib>")
   quit("no", -1)
 }
 
@@ -746,4 +746,4 @@ write_lines(plot_r, file.path(outdir, "plot.R"), append = outdir != ".")
 
 style_file(file.path(outdir, "plot.R"))
 
-message("ALL operations done")
+message("ALL operations done. Check output directory for generated plugin.")

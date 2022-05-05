@@ -9,3 +9,4 @@ Makefile
 ^docs$
 ^pkgdown$
 inst/extdata/ezcox/result
+hisub_doc.md
