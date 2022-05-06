@@ -10,17 +10,8 @@ script_name <- sub(
   file_arg_name, "",
   initial_options[grep(file_arg_name, initial_options)]
 )
-script_dir <<- dirname(script_name)
 
-ow <- getwd()
-renv_dir <- file.path(script_dir, "../../") # TODO 这个用一个option去控制是否更好
-if (file.exists(file.path(renv_dir, ".Rprofile"))) {
-  setwd(renv_dir)
-  source(".Rprofile")
-}
-setwd(ow)
-
-# options
+# Options
 option_list <- list(
   make_option(c("-i", "--inputFile"),
     default = "",
@@ -36,7 +27,7 @@ option_list <- list(
   ),
   make_option(c("-t", "--tool"),
     default = "heatmap",
-    help = "configuration file (e.g. heatmap))"
+    help = "(e.g. heatmap))"
   ),
   make_option(c("-m", "--module"),
     default = "basic",
@@ -55,17 +46,32 @@ option_list <- list(
 )
 
 opt <- parse_args(OptionParser(option_list = option_list))
-# opt = list(inputFile = "inst/extdata/ezcox/data.txt", confFile = "inst/extdata/ezcox/data.json",
-#            outputFilePrefix = "inst/extdata/ezcox/test", tool = "inst/extdata/ezcox",
-#            module = "basic", simple = FALSE, enableExample = TRUE, help = FALSE)
+# print(dput(opt))
+# quit("no")
+
+if (file.exists(file.path(dirname(opt$confFile), "plot.R"))) {
+  message("Running from developer mode")
+  script_dir <<- dirname(normalizePath(dirname(opt$confFile)))
+} else {
+  message("Running from server mode")
+  script_dir <<- dirname(script_name)
+}
+
+ow <- getwd()
+renv_dir <- file.path(script_dir, "../../")
+# TODO 这个用一个option去控制是否更好？
+if (file.exists(file.path(renv_dir, ".Rprofile"))) {
+  setwd(renv_dir)
+  source(".Rprofile")
+}
+setwd(ow)
 
 if (!opt$simple) {
-  #source(file.path(script_dir, "lib.R"))
   set_extra_pkgs()
 }
 
 outlog_dir <- file.path(dirname(opt$outputFilePrefix), "log")
 if (!dir.exists(outlog_dir)) {
-  dir.create(outlog_dir)
+  dir.create(outlog_dir, recursive = TRUE, showWarnings = TRUE)
 }
 run_hiplot()

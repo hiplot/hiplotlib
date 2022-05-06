@@ -1,7 +1,9 @@
 initSteps <- function() {
   # read in configuration file
+  conf <- globs_get("conf")
+  stopifnot(!is.null(conf))
   if (!is.null(conf$tool)) {
-    conf <<- conf$params$config
+    conf <- conf$params$config
   }
   id <- c("read-params", "read-data")
   label <- c("en:Parse parameters;zh_cn:解析参数", "en:Read data;zh_cn:读取数据")
@@ -18,14 +20,14 @@ initSteps <- function() {
 }
 
 checkExample <- function() {
-  conf_raw <- conf
+  conf_raw <- conf <- globs_get("conf")
   if (is.null(conf_raw$exampleData$config)) {
     conf_raw$exampleData <- conf_raw$exampleData[[1]]
   }
   if (is.logical(opt$enableExample) && opt$enableExample) {
     for (i in names(conf_raw$exampleData$config)) {
       for (j in names(conf_raw$exampleData$config[[i]])) {
-        conf[[i]][[j]] <<- conf_raw$exampleData$config[[i]][[j]]
+        conf$params$config[[i]][[j]] <- conf_raw$exampleData$config[[i]][[j]]
       }
     }
     globs_set("conf")
@@ -48,7 +50,7 @@ format_conf_opt <- function () {
   }
   # convert old config
   ref <- c(font_family = "font",
-    family = "font", 
+    family = "font",
     digets = "digits",
     title_size = "titleSize",
     axis_title_size = "axisTitleSize",
@@ -153,6 +155,7 @@ start_task <- function() {
   entry <- sprintf("%s/%s/%s.R", script_dir,
     opt$tool, c("plot", "start", "entry"))
   entry <- entry[file.exists(entry)]
+  if (length(entry) == 0L) stop("No entry found, bad script directory setting!")
   sapply(entry, source)
   tmp_pdfs <- list.files(
     dirname(opt$outputFilePrefix),
@@ -169,7 +172,7 @@ start_task <- function() {
 }
 
 eval_parse_codes <- function() {
-  script_dir <- getOption(
+  script_dir <<- getOption(
     "hiplotlib.script_dir",
     get("script_dir", envir = rlang::global_env())
   )

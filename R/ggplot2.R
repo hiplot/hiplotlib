@@ -216,7 +216,7 @@ set_complex_general_theme <- function(p, conf = globs_get("conf")) {
 #' [brewer_palette_names], [prism_palette_names], etc.
 #' @export
 return_hiplot_palette <- function(u, custom = NULL) {
-  if (u == "null") {
+  if (length(u) < 1 || u %in% "null") {
     return(NULL)
   } else if (!is.null(custom) && length(custom) > 0) {
     custom <- custom_color_filter(custom)
@@ -249,7 +249,7 @@ return_hiplot_palette <- function(u, custom = NULL) {
 #' @param custom a user specified custom color vector.
 #' @export
 return_hiplot_palette_color <- function(u, custom = NULL) {
-  if (u == "null") {
+  if (length(u) < 1 || u %in% "null") {
     return(NULL)
   } else if (!is.null(custom) && length(custom) > 0) {
     custom <- custom_color_filter(custom)
@@ -285,7 +285,7 @@ get_hiplot_color <- function(u, n = -1, custom = NULL) {
   # u: palette
   # n: number of colors
 
-  if (u == "null") {
+  if (length(u) < 1 || u %in% "null") {
     return(NULL)
   } else if (!is.null(custom) && length(custom) > 0) {
     custom <- custom_color_filter(custom)

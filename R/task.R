@@ -7,13 +7,13 @@ NULL
 #' @param conf Web UI conf.
 #' @export
 update_task_status <- function(conf) {
-  conf <<- conf
-  globs_set("conf")
+  conf <- globs_get("conf")
   outfn <- paste0(dirname(opt$outputFilePrefix), "/task.status.json")
   if (!file.exists(paste0(dirname(opt$outputFilePrefix), "/task.retry"))) {
     outfn <- paste0(dirname(dirname(opt$outputFilePrefix)), "/task.status.json")
   }
   jsonlite::write_json(conf$steps, outfn)
+  globs_set("conf")
 }
 
 #' @describeIn task Create a task to run

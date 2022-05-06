@@ -6,56 +6,120 @@ If you have developed a tool with a non-R program, you can also wrap it in an R 
 
 ## Hiplot plugin tree
 
-In current stage, a formal Hiplot plugin has the following structure in a directory:
+A Hiplot plugin is a combination of an R script and three JSON files.
 
-- `plot.R` : where the core computation implemented.
-- `ui.json`: UI controls for the plugin.
-- `data.json`: set the default arguments to UI widgets and the backend `plot.R`.
-- `meta.json`: set plugin metadata like author, emails, etc.
+- `plot.R` : where the core data analysis/visualization implemented.
+- `ui.json`: UI controls of the plugin.
+- `data.json`: default setting .
+- `meta.json`: plugin metadata including author, emails, etc.
+
+To tell the users how to use the plugin, you can also include two Markdown files to describe the detail of plugin, notes.
+
 - `README.md`: detail usage of the plugin in English.
-- `README.zh_cn.md`: detail usage of the plugin Chinese.
+- `README.zh_cn.md`: detail usage of the plugin in Chinese.
 
- (excepts the two `README.*` files).
+PS. You can also provide one of the files and request the Hiplot maintainers to translate it to another.
+
+## Installation
+
+To use HiSub, you have to install R package [{hiplotlib}](https://github.com/hiplot/hiplotlib) with:
+
+```r
+remotes::install_github("hiplot/hiplotlib")
+```
+
+### Unix-like system
+
+If you are using Unix-like system (i.e., MacOS or Linux), you can run `hiplotlib::deploy()` to deploy
+the script to `PATH` variable, then you can run HiSub with `hisub`.
+
+R console:
+
+```r
+library(hiplotlib)
+deploy()
+# Linking hisub command
+# Linking hicli command
+# Done
+# Now you shall run hisub and hicli from anywhere.
+```
+
+Terminal:
+
+```sh
+$ hisub                              
+Using library: /Users/wsx/Library/R
+HiSub version 0.4
+Copyright (c) 2021 Hiplot (https://hiplot.com.cn/)
+========================
+Checking dependencies...
+Loading required package: pacman
+Done
+Checking input...
+No operations detected.
+Usage:
+        `hisub template` to generate a template.
+        `hisub source.R [...] [outdir]` to convert R script to Hiplot plugin.
+
+Details see <https://github.com/hiplot/hiplotlib>
+```
+
+### Windows system
+
+If you are using Windows system, you can locate the `hisub.R` in R console with:
+
+```r
+system.file(package = "hiplotlib")
+# [1] "D:/Rlib/hiplotlib"
+```
+
+Then you can run HiSub with the following command in PowerShell/CMD:
+
+```sh
+$ Rscript D:/Rlib/hiplotlib/hisub.R
+```
+
+You will get similar prompt message like Unix-like system.
 
 ## HiSub usage
 
-Firstly clone the tool to local machine.
+### Step 1: generate template
+
+First you should prepare an R script named `source.R` in terminal with:
+
+> In Windows, you should modify the `hisub` to `Rscript D:/Rlib/hiplotlib/hisub.R`,
+> where `D:/Rlib/hiplotlib` should be changed to result of `system.file(package = "hiplotlib")`
+> on your machine.
 
 ```sh
-git clone https://github.com/hiplot/hiplot-plugin-generator
-cd hiplot-plugin-generator
+$ hisub template
+Using library: /Users/wsx/Library/R
+HiSub version 0.4
+Copyright (c) 2021 Hiplot (https://hiplot.com.cn/)
+========================
+Checking dependencies...
+Loading required package: pacman
+Done
+Checking input...
+'template' command detected. Generating template 'source.R'.
+Done
 ```
 
-Then you can prepare a R script named `source.R` with:
+You will find a `source.R` file has been created in your directory.
 
 ```sh
-./hisub.R template
+$ ls
+source.R
 ```
+### Step 2: implement the computation/visualization
 
-Next modify the `source.R` as your wish and convert it into your Hiplot plugin.
-
-```sh
-./hisub.R source.R <output-directory>
-```
-
-For better use this tools, I recommend you to generate a soft link to the `hisub.R` with command similar to
-
-```sh
-ln -s ~/Documents/GitHub/hiplot-plugin-generator/hisub.R ~/.local/bin/hisub
-```
-
-Change the first path to your cloned `hisub.R` path and change the second path to a path storing the executable file.
-NOTE, the second path should be in system `PATH` variable so you can call **HiSub** with `hisub`.
-
-### Hello World
-
-For preparing the core R script, let's get started with the Hello World plugin for Hiplot, which shows the core concept of **Hisub** and most common setting.
-
-The contents of `helloworld.R`:
+Now you open the `source.R` with your favorite editor (RStudio/VSCode/Vim), you will find a *helloworld* Hiplot plugin has been generated for you, this template plugin shows the core concept of Hisub and most common setting.
 
 ```R
+$ cat source.R 
 # @hiplot start
 # @appname helloworld
+# @alias An-Example
 # @apptitle
 # Hiplot Hello World
 # Hiplot 示例插件
@@ -89,7 +153,7 @@ The contents of `helloworld.R`:
 # @return ggplot::["pdf", "png"]::{"cliMode": true, "title": "A test plot", "width":4, "height": 4, "theme": "theme_bw"}
 # @data
 # # You can write the code to generate the example data
-# # 'data.txt' described in parameter data, or you can
+# # "data.txt" described in parameter data, or you can
 # # omit this tag and submit prepared data files.
 # # File size <100Kb is recommended.
 # # 此处可以编写生成示例数据（建议小于 100Kb）的代码
@@ -114,33 +178,193 @@ helloworld <- function(data, x, y, size = 2, add_line = TRUE) {
 }
 ```
 
-We can divide the contents into 2 parts:
+> If you only write English, you can repeat English in the Chinese description part.
+>
+> Check [Hiplot tag list](#hiplot-tag-list) section for more description about supported Hiplot tags.
+
+We can divide the script contents into 2 parts:
 
 1. The comment PART describe the metadata of this plugin and how the parameters map to a web widget (e.g., `select`) and their default values.
 2. The code PART describe how to generate the result plot and we should **include the core plotting code in a function**.
 
-> NOTE: we use tag`@xxx` to recognize the useful information. **HiSub** will only parse the comments between `@hiplot start` and `@hiplot end`. And only the parameters with `export::` will be parsed.
+> **NOTE**: we use tag`@xxx` to recognize the useful information. HiSub **will only parse** the comments between `@hiplot start` and `@hiplot end`. And only the parameters with `export::` will be parsed.
 
 With the R script, we can generate the Hiplot plugin with command:
 
 ```sh
-./hisub.R examples/helloworld.R test_hello
+$ hisub source.R helloword
+Using library: /Users/wsx/Library/R
+HiSub version 0.4
+Copyright (c) 2021 Hiplot (https://hiplot.com.cn/)
+========================
+Checking dependencies...
+Loading required package: pacman
+Done
+Checking input...
+Done
+Preprocessing R script source.R
+Done
+Parsing Hiplot tags...
+Generating example data file...
+Done
+Generating plugin files...
+        Set example data
+         data rows: 32
+         esize: 1.2509765625
+  - meta.json
+  - data.json
+  - ui.json
+  - plot.R
+Styling  1  files:
+ helloword/plot.R ℹ 
+────────────────────────────────────────
+Status  Count   Legend 
+✔       0       File unchanged.
+ℹ       1       File changed.
+✖       0       Styling threw an error.
+────────────────────────────────────────
+Please review the changes carefully!
+ALL operations done. Check output directory for generated plugin.
 ```
 
-**HiSub** accept as many as parameters you can put, but only the first will be treated as the R script to parse
+HiSub accept as many as parameters you can put, but only the first will be treated as the R script (here is `source.R`) to parse.
 
-Others:
+Others parameters:
 
 - The last argument should be a directory path for the plugin, typically it has the same name as your plugin name.
-- Other middle arguments will be treated as necessary files (like `README.md`, currently it cannot be scripts called by the 1st R script ) and copied to the destination directory (specified by the last argument).
+- Other middle arguments will be treated as necessary files (like `README.md`) and copied to the destination directory (specified by the last argument).
+
+Now you got a helloworld plugin for Hiplot:
+
+```sh
+$ tree helloword 
+helloword
+├── data.json
+├── data.txt
+├── meta.json
+├── plot.R
+└── ui.json
+
+0 directories, 5 files
+```
+### Step 3: preview the plugin
 
 Then you can submit the generated `data.json` and `ui.json` to <https://hiplot.com.cn/developer/plugin-preview> (You can also read exmaples provided by this link and see how to set the parameter settings) to see how it works. For our "Hello World", it looks like:
 
 ![image-20210204202229053](https://gitee.com/ShixiangWang/ImageCollection/raw/master/png/20210204202229.png)
 
-### Tag List
+### Step 4 (optional): local test
 
-This section I will briefly describe supported tags, for more information, please read the Docs.
+If you want to test locally to see if your plugin works well, 'hicli' command would help you.
+
+#### Use hicli in terminal
+
+```sh
+$ cd helloword 
+$ # Check help
+$ hicli -h
+Using library: /Users/wsx/Library/R
+Usage: /usr/local/bin/hicli [options]
+
+
+Options:
+        -i INPUTFILE, --inputFile=INPUTFILE
+                input data
+
+        -c CONFFILE, --confFile=CONFFILE
+                configuration file
+
+        -o OUTPUTFILEPREFIX, --outputFilePrefix=OUTPUTFILEPREFIX
+                prefix of output plots
+
+        -t TOOL, --tool=TOOL
+                (e.g. heatmap))
+
+        -m MODULE, --module=MODULE
+                module name (e.g. basic)
+
+        -s, --simple
+                only loading core packages
+
+        -e, --enableExample
+                enable auto load example
+
+        -h, --help
+                Show this help message and exit
+```
+
+Run the helloword plugin locally.
+
+```sh
+$ hicli -i data.txt -c data.json -t helloword -m basic -e -s -o hwtest/helloword
+
+General packages cowplot, patchwork, extrafont, R.utils are loaded.
+   mpg cyl disp  hp drat    wt  qsec vs am gear carb
+1 21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+2 21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+3 22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+4 21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+5 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+6 18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+[1] "hwtest/log/core-steps.log"
+[1] "hwtest/log/done.log"
+[1] ""
+```
+
+> `-e` must be enabled to include and preprocess the example data.
+
+Result tree:
+
+```sh
+$ tree hwtest 
+hwtest
+├── helloword.Rdata
+├── helloword.pdf
+├── log
+│   ├── core-steps.log
+│   ├── done.log
+│   ├── read-data.log
+│   └── read-params.log
+└── task.log
+
+1 directory, 7 files
+```
+
+Also a file `task.status.json` is available in current directory.
+
+#### If you prefer to use R console
+
+```r
+library(hiplotlib)
+basedir = "/Users/wsx/Documents/GitHub/hiplugin-test/helloword"
+opt = list(inputFile = file.path(basedir, "data.txt"),
+           confFile = file.path(basedir, "data.json"),
+           outputFilePrefix = file.path(basedir, "hwtest/helloword"),
+           tool = "helloword",
+           module = "basic",
+           simple = TRUE,
+           enableExample = TRUE,
+           help = FALSE)
+dir.create(dirname(opt$outputFilePrefix))
+dir.create(file.path(dirname(opt$outputFilePrefix), "log"))
+options(hiplotlib.script_dir = dirname(basedir))
+run_hiplot()
+```
+
+### Step 5: plugin submission
+
+Now you can submit your plugin via email (<admin@hiplot.org>) or GitHub <https://github.com/hiplot/plugins-open> by pull request.
+
+## More examples
+
+- [ezcox](https://github.com/hiplot/hiplotlib/tree/master/inst/hisub_examples/ezcox.R) - <https://hiplot.com.cn/basic/ezcox>
+- [pcatools](https://github.com/hiplot/hiplotlib/tree/master/inst/hisub_examples/pcatools.R) - <https://hiplot.com.cn/basic/pcatools>
+
+More information about UI design and setting can be found at <https://hiplot.com.cn/docs/zh/development-guides/>.
+
+## Hiplot tag list
+
+This part describes supported Hiplot tags.
 
 - `@hiplot`, 1 line, seperates the useful comments parsed by **HiSub**, only `start` and `end` are valid.
 - `@appname`, 1 line,  set your plugin name (cannot have space, it will be used to set the plugin URL on hiplot).
@@ -172,18 +396,86 @@ This section I will briefly describe supported tags, for more information, pleas
   - `output-setting` (JSON format) corresponds to default general parameters in a plot which provided in Hiplot UI but cannot be mapped to parameters of the main functions, like `title`, `palette`, `theme`, `width` and `height` of the plot, etc. (`cliMode` is suggested enable, it works faster for simple plugin).
 - `@data`: many line, it contains code to generate example data described in data table parameters (**Optional**).
 
-### More Examples
+## Utils of Hiplotlib
 
-- [ezcox](examples/ezcox.R) - <https://hiplot.com.cn/basic/ezcox>
-- [pcatools](examples/pcatools.R) - <https://hiplot.com.cn/basic/pcatools>
+Hiplotlib provides configuration variables and a lot of function families to execute the Hiplot plugin analysis worklfow and help to build a better plugin without writing too-many custom functions. You can directly use the features to custom output plots.
 
-### Docs
+| Variable/function           | Description                                                  |
+| :-------------------------- | ------------------------------------------------------------ |
+| .conf                       | Mocked global objects to inherit web UI options/settings for plugin developer |
+| .opt                        | Mocked global objects to inherit web UI options/settings for plugin developer |
+| add_alpha                   | Add alpha to color                                           |
+| alter_fun                   | Prestored settings and functions related to ggplot2 or plots |
+| brewer_palette_names        | Prestored settings and functions related to ggplot2 or plots |
+| brewer_pal_update           | Prestored settings and functions related to ggplot2 or plots |
+| capitalize                  | Capitalize a string                                          |
+| cb_palette                  | Prestored settings and functions related to ggplot2 or plots |
+| choose_ggplot_theme         | Prestored settings and functions related to ggplot2 or plots |
+| colname2data                | Reset 'colnames' of a data frame                             |
+| col_fun_cont                | Prestored settings and functions related to ggplot2 or plots |
+| col_tag                     | Prestored settings and functions related to ggplot2 or plots |
+| custom_color_filter         | Prestored settings and functions related to ggplot2 or plots |
+| data_arg_preprocess         | Preprocess the data argument from conf object                |
+| deploy                      | Deploy Command Line Interface to System Local Path           |
+| draw_map                    | Prestored settings and functions related to ggplot2 or plots |
+| export                      | Functions and utilities to export hiplot output              |
+| export_directory            | Functions and utilities to export hiplot output              |
+| export_htmlwidget           | Functions and utilities to export hiplot output              |
+| export_plotly               | Functions and utilities to export hiplot output              |
+| export_pptx                 | Functions and utilities to export hiplot output              |
+| export_single               | Functions and utilities to export hiplot output              |
+| get_hiplot_color            | Prestored settings and functions related to ggplot2 or plots |
+| ggplot2                     | Prestored settings and functions related to ggplot2 or plots |
+| ggplot2_themes              | Prestored settings and functions related to ggplot2 or plots |
+| ggplot2_themes2             | Prestored settings and functions related to ggplot2 or plots |
+| ggsci_palette_length        | Prestored settings and functions related to ggplot2 or plots |
+| ggsci_palette_names         | Prestored settings and functions related to ggplot2 or plots |
+| gg_color_default            | Prestored settings and functions related to ggplot2 or plots |
+| globs                       | Functions to manage the global setting objects               |
+| globs_get                   | Functions to manage the global setting objects               |
+| globs_list                  | Functions to manage the global setting objects               |
+| globs_set                   | Functions to manage the global setting objects               |
+| graf_palette_names          | Prestored settings and functions related to ggplot2 or plots |
+| hiplotlib                   | hiplotlib package                                            |
+| html2pdf                    | Functions and utilities to export hiplot output              |
+| import                      | Functions and utilities related to data import               |
+| import_images_to_pdf        | Functions and utilities to export hiplot output              |
+| list_same_string_position   | Get the same characters in two strings                       |
+| merge_pdfs                  | Functions and utilities to export hiplot output              |
+| mut_cols                    | Prestored settings and functions related to ggplot2 or plots |
+| new_task_step               | Functions and utilities related to hiplot task               |
+| parse_file_link             | Functions and utilities to export hiplot output              |
+| pdf2image                   | Functions and utilities to export hiplot output              |
+| pdfs2image                  | Functions and utilities to export hiplot output              |
+| position_type               | Prestored settings and functions related to ggplot2 or plots |
+| prism_palette_names         | Prestored settings and functions related to ggplot2 or plots |
+| read_data                   | Functions and utilities to export hiplot output              |
+| return_ggplot_theme         | Prestored settings and functions related to ggplot2 or plots |
+| return_hiplot_palette       | Prestored settings and functions related to ggplot2 or plots |
+| return_hiplot_palette_color | Prestored settings and functions related to ggplot2 or plots |
+| run_hiplot                  | Run hiplot                                                   |
+| run_task_step               | Functions and utilities related to hiplot task               |
+| set_complex_general_theme   | Prestored settings and functions related to ggplot2 or plots |
+| set_extra_pkgs              | Set extra R packages before starting plugin                  |
+| set_factors                 | Set a vector to a factor                                     |
+| set_general_pkgs            | Set general R packages before starting plugin                |
+| set_global_confs            | Check and update global setting before starting plugin       |
+| set_global_options          | Set R global options before starting plugin                  |
+| set_palette_theme           | Prestored settings and functions related to ggplot2 or plots |
+| split_pdfs                  | Functions and utilities to export hiplot output              |
+| system_safe                 | Run system commands                                          |
+| task                        | Functions and utilities related to hiplot task               |
+| transform                   | Transform value                                              |
+| transform_val               | Transform value                                              |
+| transparentColor            | Prestored settings and functions related to ggplot2 or plots |
+| update_task_status          | Functions and utilities related to hiplot task               |
 
-See [doc.md](doc.md)
+> Updated at 2022/5/6
 
-TODO:
+## Bug report | feature request
 
-https://github.com/hiplot/hiplot-plugin-generator/blob/master/doc.md
+Please file an issue to <https://github.com/hiplot/hiplotlib/issues>.
+## Copyright
 
 &copy; 2020-2022 Hiplot team
 
