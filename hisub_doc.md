@@ -119,7 +119,9 @@ run the following code to add `hiplugin` snippet:
 addPackageSnippets()
 ```
 
-Then you can type `hiplugin` (You can use <tab> to enable the completion) and <enter> for
+> Following the instruction poping up and restart the rstudio.
+
+Then open a new file, you can type `hiplugin` (You can use <tab> to enable the completion) and <enter> for
 generate the text in your current editing file.
 
 ![](https://cdn.nlark.com/yuque/0/2022/png/471931/1652243480523-eff40a7b-527b-4d03-8176-e84bac07b61a.png)
