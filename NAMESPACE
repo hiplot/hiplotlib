@@ -3,6 +3,7 @@
 export("%>%")
 export(.conf)
 export(.opt)
+export(addPackageSnippets)
 export(add_alpha)
 export(alter_fun)
 export(brewer_pal_update)

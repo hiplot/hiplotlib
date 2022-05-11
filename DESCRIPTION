@@ -48,6 +48,7 @@ Suggests:
     pacman,
     prettydoc,
     rmarkdown,
+    rstudioapi,
     testthat
 VignetteBuilder: 
     knitr
