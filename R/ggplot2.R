@@ -477,7 +477,6 @@ mut_cols <- c(
 #' @param filter_names used for filtering.
 #' @export
 draw_map <- function(rds, keyname, filter_names = NULL) {
-
   script_dir <- getOption(
     "hiplotlib.script_dir",
     get("script_dir", envir = rlang::global_env())

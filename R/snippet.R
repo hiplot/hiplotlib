@@ -7,9 +7,10 @@
 #' @export
 #' @references https://stackoverflow.com/questions/62220596/can-r-packages-add-code-snippets-to-users-snippet-files
 #' @examples
-#' \dontrun{addPackageSnippets()}
+#' \dontrun{
+#' addPackageSnippets()
+#' }
 addPackageSnippets <- function() {
-
   added <- FALSE
 
   # if not on RStudio or RStudioServer exit
@@ -29,12 +30,12 @@ addPackageSnippets <- function() {
 
   # Path to directory for RStudios user files depends on OS
   if (rstudioapi::versionInfo()$version < "1.3") {
-    rstudioSnippetsPathBase <- file.path(path.expand('~'),".R", "snippets")
+    rstudioSnippetsPathBase <- file.path(path.expand("~"), ".R", "snippets")
   } else {
     if (.Platform$OS.type == "windows") {
       rstudioSnippetsPathBase <- file.path(Sys.getenv("APPDATA"), "RStudio", "snippets")
     } else {
-      rstudioSnippetsPathBase <- file.path(path.expand('~'), ".config/rstudio", "snippets")
+      rstudioSnippetsPathBase <- file.path(path.expand("~"), ".config/rstudio", "snippets")
     }
   }
 
@@ -51,7 +52,7 @@ addPackageSnippets <- function() {
 
     # load package snippets definitions
     #
-    pckgSnippetsFileContent <- readLines(pckgSnippetsFilesPath, warn=FALSE)
+    pckgSnippetsFileContent <- readLines(pckgSnippetsFilesPath, warn = FALSE)
 
     # Extract names of package snippets
     #
@@ -66,14 +67,16 @@ addPackageSnippets <- function() {
     # the default snippets from the 'user file'
     #
     if (!file.exists(rstudioSnippetsFilePath)) {
-      stop(paste0( "'", rstudioSnippetsFilePath, "' does not exist yet\n.",
-                   "Use RStudio -> Tools -> Global Options -> Code -> Edit Snippets\n",
-                   "To initalize user defined snippets file by adding dummy snippet\n"))
+      stop(paste0(
+        "'", rstudioSnippetsFilePath, "' does not exist yet\n.",
+        "Use RStudio -> Tools -> Global Options -> Code -> Edit Snippets\n",
+        "To initalize user defined snippets file by adding dummy snippet\n"
+      ))
     }
 
     # Extract 'names' of already existing snitppets
     #
-    rstudioSnippetsFileContent <- readLines(rstudioSnippetsFilePath, warn=FALSE)
+    rstudioSnippetsFileContent <- readLines(rstudioSnippetsFilePath, warn = FALSE)
     rstudioSnippetDefinitions <- rstudioSnippetsFileContent[grepl("^snippet (.*)", rstudioSnippetsFileContent)]
 
     # replace two spaces with tab, ONLY at beginning of string
@@ -94,14 +97,18 @@ addPackageSnippets <- function() {
     # Inform user about changes, ask to confirm action
     #
     if (interactive()) {
-      cat(paste0("You are about to add the following ", length(snippetsToCopy),
-                 " snippets to '", rstudioSnippetsFilePath, "':\n",
-                 paste0(paste0("-", snippetsToCopy), collapse="\n")))
+      cat(paste0(
+        "You are about to add the following ", length(snippetsToCopy),
+        " snippets to '", rstudioSnippetsFilePath, "':\n",
+        paste0(paste0("-", snippetsToCopy), collapse = "\n")
+      ))
       if (length(snippetsNotToCopy) > 0) {
-        cat(paste0("\n(The following snippets will NOT be added because there is already a snippet with that name:\n",
-                   paste0(snippetsNotToCopy, collapse=", ") ,")"))
+        cat(paste0(
+          "\n(The following snippets will NOT be added because there is already a snippet with that name:\n",
+          paste0(snippetsNotToCopy, collapse = ", "), ")"
+        ))
       }
-      answer <- readline(prompt="Do you want to procedd (y/n): ")
+      answer <- readline(prompt = "Do you want to procedd (y/n): ")
       if (substr(answer, 1, 1) == "n") {
         next()
       }
@@ -119,7 +126,7 @@ addPackageSnippets <- function() {
       # First find start of next defintion and return
       # previous line number or lastline if already in last definiton
       #
-      endLine <- allPckgSnippetDefinitonStarts[allPckgSnippetDefinitonStarts > startLine][1] -1
+      endLine <- allPckgSnippetDefinitonStarts[allPckgSnippetDefinitonStarts > startLine][1] - 1
       if (is.na(endLine)) {
         endLine <- length(pckgSnippetsFileContentSanitized)
       }
@@ -128,7 +135,7 @@ addPackageSnippets <- function() {
 
       # Make sure there is at least one empty line between entries
       #
-      if (tail(readLines(rstudioSnippetsFilePath, warn=FALSE), n=1) != "") {
+      if (tail(readLines(rstudioSnippetsFilePath, warn = FALSE), n = 1) != "") {
         snippetText <- paste0("\n", snippetText)
       }
 
@@ -145,5 +152,4 @@ addPackageSnippets <- function() {
   }
 
   return(invisible(added))
-
 }

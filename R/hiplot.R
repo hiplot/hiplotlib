@@ -44,12 +44,13 @@ checkExample <- function() {
   }
 }
 
-format_conf_opt <- function () {
+format_conf_opt <- function() {
   if (is.null(conf$general$font)) {
     conf$general$font <- "Arial"
   }
   # convert old config
-  ref <- c(font_family = "font",
+  ref <- c(
+    font_family = "font",
     family = "font",
     digets = "digits",
     title_size = "titleSize",
@@ -62,7 +63,8 @@ format_conf_opt <- function () {
     vjust = "xAxisVjust",
     fontsize_row = "fontsizeRow",
     fontsize_col = "fontsizeCol",
-    digits = "digits")
+    digits = "digits"
+  )
 
   for (i in names(ref)) {
     if (i %in% names(conf$extra)) {
@@ -74,7 +76,7 @@ format_conf_opt <- function () {
   for (i in names(ref2)) {
     if (i %in% names(conf$general)) {
       if (!is.null(conf$general[[ref2[i]]])) {
-        conf$general[[ref2[i]]] = conf$general[[i]]
+        conf$general[[ref2[i]]] <- conf$general[[i]]
         conf$general[[i]] <- NULL
       }
     }
@@ -152,8 +154,10 @@ start_task <- function() {
   sourceR <- sprintf("%s/%s/source.R", script_dir, opt$tool)
   loadSourceR <- file.exists(sourceR)
   if (loadSourceR) source(sourceR)
-  entry <- sprintf("%s/%s/%s.R", script_dir,
-    opt$tool, c("plot", "start", "entry"))
+  entry <- sprintf(
+    "%s/%s/%s.R", script_dir,
+    opt$tool, c("plot", "start", "entry")
+  )
   entry <- entry[file.exists(entry)]
   if (length(entry) == 0L) stop("No entry found, bad script directory setting!")
   sapply(entry, source)
@@ -181,8 +185,10 @@ eval_parse_codes <- function() {
     get("conf", envir = rlang::global_env())
   )
   if (length(conf$steps$id) == 2) {
-    new_task_step("core-steps", "en:Analysis/Plotting;zh_cn:分析/绘图",
-      start_task)
+    new_task_step(
+      "core-steps", "en:Analysis/Plotting;zh_cn:分析/绘图",
+      start_task
+    )
   } else {
     start_task()
   }
@@ -211,15 +217,17 @@ eval_parse_codes <- function() {
 #' @export
 #' @examples
 #' \dontrun{
-#' basedir = system.file("extdata", "ezcox", package = "hiplotlib")
-#' opt = list(inputFile = file.path(basedir, "data.txt"),
-#'            confFile = file.path(basedir, "data.json"),
-#'            outputFilePrefix = file.path(basedir, "result/test"),
-#'            tool = "ezcox",
-#'            module = "basic",
-#'            simple = FALSE,
-#'            enableExample = TRUE,
-#'            help = FALSE)
+#' basedir <- system.file("extdata", "ezcox", package = "hiplotlib")
+#' opt <- list(
+#'   inputFile = file.path(basedir, "data.txt"),
+#'   confFile = file.path(basedir, "data.json"),
+#'   outputFilePrefix = file.path(basedir, "result/test"),
+#'   tool = "ezcox",
+#'   module = "basic",
+#'   simple = FALSE,
+#'   enableExample = TRUE,
+#'   help = FALSE
+#' )
 #' dir.create(dirname(opt$outputFilePrefix))
 #' dir.create(file.path(dirname(opt$outputFilePrefix), "log"))
 #' options(hiplotlib.script_dir = dirname(basedir))
@@ -235,23 +243,26 @@ run_hiplot <- function(opt = globs_get("opt")) {
     paste0("p", 1:10000), paste0("wb", 1:10000),
     "conf", "data", "p", "wb", "dat", "cem", "res", "pobj"
   )
-  tryCatch({
-    set_global_options()
-    set_general_pkgs()
-    checkExample()
-    initSteps()
-    set_global_confs()
-    data_arg_preprocess()
-    hiplot_preprocess()
-    eval_parse_codes()
-  }, error = function(e) {
-    vars <- ls(envir = .GlobalEnv)
-    vars <- vars[vars != "e"]
-    rm(list=vars[!vars %in% init_vars || vars %in% keep_vars])
-    stop(e)
-  })
+  tryCatch(
+    {
+      set_global_options()
+      set_general_pkgs()
+      checkExample()
+      initSteps()
+      set_global_confs()
+      data_arg_preprocess()
+      hiplot_preprocess()
+      eval_parse_codes()
+    },
+    error = function(e) {
+      vars <- ls(envir = .GlobalEnv)
+      vars <- vars[vars != "e"]
+      rm(list = vars[!vars %in% init_vars || vars %in% keep_vars])
+      stop(e)
+    }
+  )
   vars <- ls(envir = .GlobalEnv)
-  rm(list=vars[!vars %in% init_vars || vars %in% keep_vars])
+  rm(list = vars[!vars %in% init_vars || vars %in% keep_vars])
   gc()
   return("")
 }

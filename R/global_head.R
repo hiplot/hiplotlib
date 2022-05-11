@@ -97,10 +97,11 @@ globs_list <- function() {
 globs_get <- function(x) {
   x <- match.arg(x, choices = globs_list())
   y <- tryCatch(get(x, envir = rlang::global_env()),
-                error = function(e) {
-                  message("This should only show when developing plugin, if you see this message in run mode, please check")
-                  get(paste0(".", x), envir = rlang::global_env())
-                })
+    error = function(e) {
+      message("This should only show when developing plugin, if you see this message in run mode, please check")
+      get(paste0(".", x), envir = rlang::global_env())
+    }
+  )
   stopifnot(!is.null(y))
   y
 }
@@ -244,5 +245,3 @@ data_arg_preprocess <- function() {
 #   assign("conf", conf, envir = rlang::caller_env())
 #   assign("opt", opt, envir = rlang::caller_env())
 # }
-
-
