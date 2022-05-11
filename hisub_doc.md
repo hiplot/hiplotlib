@@ -111,6 +111,21 @@ You will find a `source.R` file has been created in your directory.
 $ ls
 source.R
 ```
+
+If you're using RStudio, you can also use the RStudio snippet to generate the template,
+run the following code to add `hiplugin` snippet:
+
+```R
+addPackageSnippets()
+```
+
+Then you can type `hiplugin` (You can use <tab> to enable the completion) and <enter> for
+generate the text in your current editing file.
+
+![](https://cdn.nlark.com/yuque/0/2022/png/471931/1652243480523-eff40a7b-527b-4d03-8176-e84bac07b61a.png)
+
+![](https://cdn.nlark.com/yuque/0/2022/png/471931/1652243531602-0d406656-77ad-4875-b3cf-7428d09a6d2d.png)
+
 ### Step 2: implement the computation/visualization
 
 Now you open the `source.R` with your favorite editor (RStudio/VSCode/Vim), you will find a *helloworld* Hiplot plugin has been generated for you, this template plugin shows the core concept of Hisub and most common setting.
