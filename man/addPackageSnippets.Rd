@@ -14,7 +14,9 @@ boolean invisible(FALSE) if nothing was added, invisible(TRUE) if snipped defini
 in 'inst/rstudio/Rsnippets.txt' and 'Rmdsnippets.txt' to the RStudios user snippet location.
 }
 \examples{
-\dontrun{addPackageSnippets()}
+\dontrun{
+addPackageSnippets()
+}
 }
 \references{
 https://stackoverflow.com/questions/62220596/can-r-packages-add-code-snippets-to-users-snippet-files

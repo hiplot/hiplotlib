@@ -1,5 +1,5 @@
-## 0.1.0.1000
+## 0.2.1
 
-- clean vars after failed
-- add NEWS.md
+- Added `unlist_and_covert()` to help clean data from UI.
+
 
