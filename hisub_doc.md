@@ -112,7 +112,9 @@ $ ls
 source.R
 ```
 
-If you're using RStudio, you can also use the RStudio snippet to generate the template,
+#### RStudio snippet
+
+If you're using **RStudio**, you can also use the RStudio snippet to generate the template,
 run the following code to add `hiplugin` snippet:
 
 ```R
@@ -127,6 +129,12 @@ generate the text in your current editing file.
 ![](https://cdn.nlark.com/yuque/0/2022/png/471931/1652243480523-eff40a7b-527b-4d03-8176-e84bac07b61a.png)
 
 ![](https://cdn.nlark.com/yuque/0/2022/png/471931/1652243531602-0d406656-77ad-4875-b3cf-7428d09a6d2d.png)
+
+#### VSCode snippet
+
+If you're prefer to using **VSCode**, we provide a snippet in [r.json](r.json), you can copy its content to VSCode R snippet.
+
+> If you have'nt use VSCode R snippet before, you can type `<CTRL>+<Shift>+P` to call the search panel and type `Configure User Snippet` and select `R` to open a `r.json` file.
 
 ### Step 2: implement the computation/visualization
 
