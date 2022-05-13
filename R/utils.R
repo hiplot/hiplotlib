@@ -168,15 +168,17 @@ transform_val <- function(func_str, val) {
 #' unlist_and_covert(NULL)
 #' unlist_and_covert(list())
 #' unlist_and_covert(list("A", "B"))
+#' unlist_and_covert(list("NA", "B"))
 #' unlist_and_covert(list(list(A=1), "B"))
 unlist_and_covert = function(x, recursive = FALSE) {
   if (!is.null(x)) {
     x = unlist(x, recursive = recursive)
-    sapply(x, function(x) {
+    y = sapply(x, function(x) {
       if (identical(x, "NA")) NA else x
     })
+    names(y) = names(x)
+    x = y
   }
   x
 }
-
 
