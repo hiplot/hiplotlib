@@ -412,7 +412,7 @@ This part describes supported Hiplot tags.
   - `<param_name> export::<param-type>::<widget-type>::<param_setting>`
   - All `param_name`s are used to describe the parameters in the main function, here is `hello world()`.
   - `param-type` can be data (for data table), dataArg (for selecting column names in a data table), extra (custom parameters in your main function).
-  - `widget-type` can be slider, switch, select, autocomplete, color-picker, text-field.
+  - `widget-type` can be slider, switch, select, autocomplete, color-picker, text-field. More list and control see <https://vuetifyjs.com/en/components/autocompletes/>. You can see existing Hiplot plugin how to use config the widgets.
   - `param_setting` (JSON format) depends on the `widget-type`. In most common cases, a `default` item is supported to set default value for the parameter, others items will be passed to front end for setting widget UI and behavior.
 - `@return`: 1line, it has the rules:
   - `<output-type>::<output-format>::<output-setting>`
