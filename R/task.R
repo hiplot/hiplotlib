@@ -7,7 +7,6 @@ NULL
 #' @param conf Web UI conf.
 #' @export
 update_task_status <- function(conf) {
-  conf <- globs_get("conf")
   outfn <- paste0(dirname(opt$outputFilePrefix), "/task.status.json")
   if (!file.exists(paste0(dirname(opt$outputFilePrefix), "/task.retry"))) {
     outfn <- paste0(dirname(dirname(opt$outputFilePrefix)), "/task.status.json")
@@ -22,6 +21,7 @@ update_task_status <- function(conf) {
 #' @param func a function to run
 #' @export
 new_task_step <- function(id, label, func) {
+  conf <- globs_get("conf")
   log <- sprintf("%s/log/%s.log", dirname(opt$outputFilePrefix), id)
   print(log)
   con <- file(log)
