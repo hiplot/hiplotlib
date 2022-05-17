@@ -74,7 +74,7 @@ helloworld <- function(data, x, y, size = 2, add_line = TRUE) {
 '
 
 message("HiSub version ", VERSION)
-message("Copyright (c) 2021 Hiplot (https://hiplot.com.cn/)")
+message("Copyright (c) 2021 Hiplot (https://hiplot-academic.com/)")
 message("========================")
 
 message("Checking dependencies...")

@@ -5,7 +5,7 @@
 
 pacman::p_load(PCAtools)
 
-# https://hiplot.com.cn/basic/pcatools
+# https://hiplot-academic.com/basic/pcatools
 # @hiplot start
 # @appname pcatools
 # @apptitle

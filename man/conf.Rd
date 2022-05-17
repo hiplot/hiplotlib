@@ -22,8 +22,8 @@ it in R(Studio) and access the available fields.
 }
 \references{
 \itemize{
-\item \href{https://hiplot.com.cn/docs/zh/development-guides/#data-json-\%E6\%A0\%BC\%E5\%BC\%8F\%E8\%AF\%B4\%E6\%98\%8E}{Guideline - Data JSON}
-\item \href{https://hiplot.com.cn/docs/zh/development-guides/#\%E5\%90\%8E\%E5\%8F\%B0\%E4\%BB\%BB\%E5\%8A\%A1\%E4\%BB\%A3\%E7\%A0\%81\%E8\%AF\%B4\%E6\%98\%8E}{后台任务代码说明}
+\item \href{https://hiplot-academic.com/docs/zh/development-guides/#data-json-\%E6\%A0\%BC\%E5\%BC\%8F\%E8\%AF\%B4\%E6\%98\%8E}{Guideline - Data JSON}
+\item \href{https://hiplot-academic.com/docs/zh/development-guides/#\%E5\%90\%8E\%E5\%8F\%B0\%E4\%BB\%BB\%E5\%8A\%A1\%E4\%BB\%A3\%E7\%A0\%81\%E8\%AF\%B4\%E6\%98\%8E}{后台任务代码说明}
 }
 }
 \keyword{datasets}

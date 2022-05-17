@@ -12,7 +12,7 @@
 # All rights reserved.                                #
 #######################################################
 
-# https://hiplot.com.cn/basic/ezcox
+# https://hiplot-academic.com/basic/ezcox
 #
 # @hiplot start
 # @appname ezcox

@@ -8,8 +8,8 @@
 #' it in R(Studio) and access the available fields.
 #' @rdname conf
 #' @references
-#' - [Guideline - Data JSON](https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E)
-#' - [后台任务代码说明](https://hiplot.com.cn/docs/zh/development-guides/#%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E)
+#' - [Guideline - Data JSON](https://hiplot-academic.com/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E)
+#' - [后台任务代码说明](https://hiplot-academic.com/docs/zh/development-guides/#%E5%90%8E%E5%8F%B0%E4%BB%BB%E5%8A%A1%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E)
 #' @export
 .conf <- list(
   data = list(),
@@ -55,7 +55,7 @@
     background = "#FFFFFF"
   )
 )
-attr(.conf, which = "reference") <- "https://hiplot.com.cn/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
+attr(.conf, which = "reference") <- "https://hiplot-academic.com/docs/zh/development-guides/#data-json-%E6%A0%BC%E5%BC%8F%E8%AF%B4%E6%98%8E"
 
 
 #' @rdname conf
