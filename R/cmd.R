@@ -2,7 +2,7 @@
 #' @param cmd the command to run.
 #' @param print_cmd if `TRUE`, also print the command.
 #' @export
-system_safe <- function(cmd, print_cmd = FALSE) {
+system_safe <- function(cmd, print_cmd = TRUE) {
   if (print_cmd) {
     flog.info(str_remove_all(cmd, "/cluster/apps/hiplot/userdata|/cluster/apps/hiplot/web/src/scripts"))
   }
