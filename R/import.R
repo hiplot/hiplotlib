@@ -52,5 +52,9 @@ read_data <- function(path,
 #' # parse_file_link("hiplot.org/path=xxx") TODO
 parse_file_link <- function(link) {
   link <- str_replace_all(link, ".*?path=", "")
-  return(file.path(get("upload_dir", envir = .GlobalEnv), link))
+  if (isTRUE(getOption("hiplotlib.debug"))) {
+    return(link)
+  } else {
+    return(file.path(get("upload_dir", envir = .GlobalEnv), link))
+  }
 }

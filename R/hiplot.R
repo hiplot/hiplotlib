@@ -32,13 +32,15 @@ checkExample <- function() {
     }
     globs_set("conf")
     update_task_status(conf)
-    for (i in 1:length(conf_raw$exampleData$textarea)) {
-      tmp <- fread(conf_raw$exampleData$textarea[[i]], data.table = FALSE)
-      print(head(tmp))
-      if (i == 1) {
-        globs_set("tmp", name = "data")
-      } else {
-        globs_set("tmp", name = paste0("data", i))
+    if (!is.null(conf_raw$exampleData$textarea)) {
+      for (i in 1:length(conf_raw$exampleData$textarea)) {
+        tmp <- fread(conf_raw$exampleData$textarea[[i]], data.table = FALSE)
+        print(head(tmp))
+        if (i == 1) {
+          globs_set("tmp", name = "data")
+        } else {
+          globs_set("tmp", name = paste0("data", i))
+        }
       }
     }
   }
