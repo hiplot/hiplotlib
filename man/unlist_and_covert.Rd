@@ -19,5 +19,5 @@ unlist_and_covert(NULL)
 unlist_and_covert(list())
 unlist_and_covert(list("A", "B"))
 unlist_and_covert(list("NA", "B"))
-unlist_and_covert(list(list(A=1), "B"))
+unlist_and_covert(list(list(A = 1), "B"))
 }

@@ -11,3 +11,4 @@ Makefile
 inst/extdata/ezcox/result
 hisub_doc.md
 r.json
+.Rprofile

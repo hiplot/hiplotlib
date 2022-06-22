@@ -4,7 +4,7 @@
 \alias{system_safe}
 \title{Run system commands}
 \usage{
-system_safe(cmd, print_cmd = FALSE)
+system_safe(cmd, print_cmd = TRUE)
 }
 \arguments{
 \item{cmd}{the command to run.}
