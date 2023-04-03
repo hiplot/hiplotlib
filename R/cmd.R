@@ -4,7 +4,7 @@
 #' @export
 system_safe <- function(cmd, print_cmd = TRUE) {
   if (print_cmd) {
-    flog.info(str_remove_all(cmd, "/cluster/apps/hiplot/userdata|/cluster/apps/hiplot/web/src/scripts"))
+    flog.info(str_remove_all(cmd, "/cluster/apps/hiplot/userdata|/cluster/apps/hiplot/web/src/scripts|/app/hiplot/data/userdata|/app/hiplot/data/"))
   }
   stderr_fn <- tempfile()
   stdout_fn <- tempfile()

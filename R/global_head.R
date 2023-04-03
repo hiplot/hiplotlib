@@ -131,8 +131,7 @@ set_global_options <- function() {
 
   suppressWarnings(extrafont::loadfonts(quiet = TRUE))
 
-  assign("upload_dir", "/cluster/apps/hiplot/userdata", envir = rlang::global_env())
-  assign("utils_dir", "/cluster/apps/hiplot/web/src/scripts/utils", envir = rlang::global_env())
+  assign("upload_dir", getOption("hiplot.upload_dir"), envir = rlang::global_env())
 }
 
 #' Set general R packages before starting plugin
