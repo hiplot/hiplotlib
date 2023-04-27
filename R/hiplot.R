@@ -146,7 +146,7 @@ hiplot_preprocess <- function() {
 print_sessioninfo <- function() {
   session_info <- as.character(sessioninfo::session_info())
   session_info <- sapply(session_info, function(x) {
-    str_replace_all(x, "/cluster/home/public/opt|/cluster/apps/hiplot|/cluster/home", "")
+    str_replace_all(x, "/.*/opt|/.*/hiplot|/.*/home|/.*/src/scripts|/home/.*/.cache/R", "")
   })
   cat(session_info, sep = "\n")
 }
