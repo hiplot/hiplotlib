@@ -55,8 +55,8 @@ parse_file_link <- function(link) {
   if (isTRUE(getOption("hiplotlib.debug"))) {
     return(link)
   } else {
-    x <- file.path(get("upload_dir", envir = .GlobalEnv), link)
-    x <- str_remove_all(x, "//")
+    x <- paste0(get("upload_dir", envir = .GlobalEnv), "/", link)
+    x <- str_replace_all(x, "//", "/")
     return(x)
   }
 }

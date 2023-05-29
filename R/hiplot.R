@@ -259,12 +259,12 @@ run_hiplot <- function(opt = globs_get("opt")) {
     error = function(e) {
       vars <- ls(envir = .GlobalEnv)
       vars <- vars[vars != "e"]
-      rm(list = vars[!vars %in% init_vars || vars %in% keep_vars])
+      rm(list = vars[!vars %in% init_vars | vars %in% keep_vars])
       stop(e)
     }
   )
   vars <- ls(envir = .GlobalEnv)
-  rm(list = vars[!vars %in% init_vars || vars %in% keep_vars])
+  rm(list = vars[!vars %in% init_vars | vars %in% keep_vars])
   gc()
   return("")
 }
