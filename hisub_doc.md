@@ -217,7 +217,7 @@ We can divide the script contents into 2 parts:
 With the R script, we can generate the Hiplot plugin with command:
 
 ```sh
-$ hisub source.R helloword
+$ hisub source.R helloworld
 Using library: /Users/wsx/Library/R
 HiSub version 0.4
 Copyright (c) 2021 Hiplot (https://hiplot-academic.com/)
@@ -241,7 +241,7 @@ Generating plugin files...
   - ui.json
   - plot.R
 Styling  1  files:
- helloword/plot.R ℹ 
+ helloworld/plot.R ℹ 
 ────────────────────────────────────────
 Status  Count   Legend 
 ✔       0       File unchanged.
@@ -262,8 +262,8 @@ Others parameters:
 Now you got a helloworld plugin for Hiplot:
 
 ```sh
-$ tree helloword 
-helloword
+$ tree helloworld 
+hellowor1d
 ├── data.json
 ├── data.txt
 ├── meta.json
@@ -285,7 +285,7 @@ If you want to test locally to see if your plugin works well, 'hicli' command wo
 #### Use hicli in terminal
 
 ```sh
-$ cd helloword 
+$ cd hellowor1d 
 $ # Check help
 $ hicli -h
 Using library: /Users/wsx/Library/R
@@ -318,10 +318,10 @@ Options:
                 Show this help message and exit
 ```
 
-Run the helloword plugin locally.
+Run the hellowor1d plugin locally.
 
 ```sh
-$ hicli -i data.txt -c data.json -t helloword -m basic -e -s -o hwtest/helloword
+$ hicli -i data.txt -c data.json -t hellowor1d -m basic -e -s -o hwtest/hellowor1d
 
 General packages cowplot, patchwork, extrafont, R.utils are loaded.
    mpg cyl disp  hp drat    wt  qsec vs am gear carb
@@ -343,8 +343,8 @@ Result tree:
 ```sh
 $ tree hwtest 
 hwtest
-├── helloword.Rdata
-├── helloword.pdf
+├── hellowor1d.Rdata
+├── hellowor1d.pdf
 ├── log
 │   ├── core-steps.log
 │   ├── done.log
@@ -361,11 +361,11 @@ Also a file `task.status.json` is available in current directory.
 
 ```r
 library(hiplotlib)
-basedir = "/Users/wsx/Documents/GitHub/hiplugin-test/helloword"
+basedir = "/Users/wsx/Documents/GitHub/hiplugin-test/hellowor1d"
 opt = list(inputFile = file.path(basedir, "data.txt"),
            confFile = file.path(basedir, "data.json"),
-           outputFilePrefix = file.path(basedir, "hwtest/helloword"),
-           tool = "helloword",
+           outputFilePrefix = file.path(basedir, "hwtest/hellowor1d"),
+           tool = "hellowor1d",
            module = "basic",
            simple = TRUE,
            enableExample = TRUE,
