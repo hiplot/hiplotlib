@@ -37,7 +37,7 @@ TEMPLATE <- '# @hiplot start
 # en: X Axis Variable
 # zh: X 轴变量
 # @param y export::dataArg::data::{"index":2, "default": "vs", "blackItems": "carb", "required": false}
-# en: X Axis Variable
+# en: Y Axis Variable
 # zh: Y 轴变量
 # @param size export::extra::slider::{"default":2, "min":0.5, "max":5, "step":0.5, "class":"col-12"}
 # en: Dot Size
