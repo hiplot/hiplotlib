@@ -38,3 +38,6 @@ test:
 format:
 	cd .;\
 	Rscript -e "library(formatR);options('formatR.indent'=2);tidy_dir('./R');tidy_dir('./hiplotlib/inst/extdata/')"
+
+docker_build:
+	docker build -t $(PKGNAME):$(PKGVERS) .
