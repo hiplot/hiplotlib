@@ -21,7 +21,7 @@ remotes::install_github("hiplot/hiplotlib")
 
 Hiplot Doker image is now available to use `hisub` and `hicli` to build and run hiplot plugin, It is built based on [rocker/r-ver:4.3](https://hub.docker.com/r/rocker/r-ver/tags)
 
-**Quick Start （base on vrsion`0.2.1-1`）: **
+### Quick Start （base on vrsion`0.2.1-1`）: 
 
 * Build Images : `make docker_build` It takes 20-40 minutes to build, and then you can use `docker images hiplotlib` to check it was success
 * Run a new Containers : `docker run -itd -n hiplotlib hiplotlib:0.2.1-1 ` It will start a new containers named hiplotlib in the background, if you nedd to run your own code in this containers, you can use params `-v /yourCode/filepath:/app/containerPath` to mapping your host file into container 
