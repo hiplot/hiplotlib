@@ -1,0 +1,6 @@
+[submodule "rscheduler"]
+	path = rscheduler
+	url = git@github.com:hiplot/rscheduler.git
+[submodule "hiplotCopilot"]
+	path = hiplotCopilot
+	url = git@github.com:hiplot/hiplotCopilot.git
