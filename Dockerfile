@@ -79,16 +79,10 @@ RUN R -e "BiocManager::install(c( \
 # build and install hiplotlib
 RUN make build && make install
 RUN R -e "library('hiplotlib');deploy()"
+RUN chmod 777 /usr/local/lib/R/site-library/hiplotlib/hicli.R /usr/local/lib/R/site-library/hiplotlib/hisub.R
 
 RUN apt autoremove -y && \
 	apt autoclean -y
 RUN rm -rf /var/lib/apt/lists/*
 
 CMD ["R"]
-
-
-
-
-
-
-
