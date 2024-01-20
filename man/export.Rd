@@ -92,33 +92,33 @@ Functions and utilities to export hiplot output
 }
 \section{Functions}{
 \itemize{
-\item \code{export_single}: Export a single ggplot object
+\item \code{export_single()}: Export a single ggplot object
 
-\item \code{export_pptx}: Export a single ggplot object to PPTx
+\item \code{export_pptx()}: Export a single ggplot object to PPTx
 
-\item \code{export_plotly}: Export a single ggplot object to plotly
+\item \code{export_plotly()}: Export a single ggplot object to plotly
 
-\item \code{export_directory}: Export hiplot plugin output directory to a zipped file
+\item \code{export_directory()}: Export hiplot plugin output directory to a zipped file
 
-\item \code{export_htmlwidget}: Export a single ggplot object to html file
+\item \code{export_htmlwidget()}: Export a single ggplot object to html file
 
-\item \code{html2pdf}: Convert html to pdf
+\item \code{html2pdf()}: Convert html to pdf
 
-\item \code{pdf2image}: Convert pdf to images
+\item \code{pdf2image()}: Convert pdf to images
 
-\item \code{pdfs2image}: Convert multiple pdfs to images
+\item \code{pdfs2image()}: Convert multiple pdfs to images
 
-\item \code{merge_pdfs}: Merge multiple pdf files into one
+\item \code{merge_pdfs()}: Merge multiple pdf files into one
 
-\item \code{split_pdfs}: Split multiple page pdfs to a directory
+\item \code{split_pdfs()}: Split multiple page pdfs to a directory
 
-\item \code{import_images_to_pdf}: Export non-pdf images as pdfs
+\item \code{import_images_to_pdf()}: Export non-pdf images as pdfs
 
-\item \code{read_data}: Read common format data into data frame
+\item \code{read_data()}: Read common format data into data frame
 
-\item \code{parse_file_link}: Parse the true file path from link
+\item \code{parse_file_link()}: Parse the true file path from link
+
 }}
-
 \examples{
 # parse_file_link("hiplot.org/path=xxx") TODO
 }

@@ -9,7 +9,6 @@
 #' \url{https://github.com/hiplot/hiplotlib}
 #'
 #' Report bugs at \url{https://github.com/hiplot/hiplotlib/issues}
-#' @docType package
 #' @name hiplotlib
 #' @importFrom RColorBrewer brewer.pal brewer.pal.info
 #' @importFrom gplots colorpanel
@@ -28,5 +27,6 @@
 #' @importFrom htmlwidgets saveWidget
 #' @importFrom webshot webshot
 #' @importFrom callr r_safe
+#' @importFrom reticulate use_condaenv py_config
 #' @import ggplot2 R.utils optparse patchwork uuid
 NULL

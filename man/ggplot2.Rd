@@ -158,42 +158,42 @@ Prestored settings and functions related to ggplot2 or plots
 
 \item \code{ggplot2_themes2}: A list of ggplot2 themes
 
-\item \code{choose_ggplot_theme}: Set ggplot2 theme for a ggplot object
+\item \code{choose_ggplot_theme()}: Set ggplot2 theme for a ggplot object
 
-\item \code{return_ggplot_theme}: Return ggplot2 theme based on string
+\item \code{return_ggplot_theme()}: Return ggplot2 theme based on string
 
-\item \code{position_type}: Return position type
+\item \code{position_type()}: Return position type
 
-\item \code{set_palette_theme}: Set palette and theme from conf for a ggplot object
+\item \code{set_palette_theme()}: Set palette and theme from conf for a ggplot object
 
-\item \code{set_complex_general_theme}: Set complex general theme from conf for a ggplot object
+\item \code{set_complex_general_theme()}: Set complex general theme from conf for a ggplot object
 
-\item \code{return_hiplot_palette}: Return ggplot2 scale of fill palette with predefined or custom colors
+\item \code{return_hiplot_palette()}: Return ggplot2 scale of fill palette with predefined or custom colors
 
-\item \code{return_hiplot_palette_color}: Return ggplot2 scale of color palette with predefined or custom colors,
+\item \code{return_hiplot_palette_color()}: Return ggplot2 scale of color palette with predefined or custom colors,
 similar to \link{return_hiplot_palette}
 
-\item \code{get_hiplot_color}: Get colors from a color palette
+\item \code{get_hiplot_color()}: Get colors from a color palette
 
-\item \code{gg_color_default}: A color generator for default colors in ggplot
+\item \code{gg_color_default()}: A color generator for default colors in ggplot
 
-\item \code{brewer_pal_update}: An update version of brew.pal function
+\item \code{brewer_pal_update()}: An update version of brew.pal function
 
-\item \code{transparentColor}: Transparent colors
+\item \code{transparentColor()}: Transparent colors
 
-\item \code{custom_color_filter}: A custom color filter
+\item \code{custom_color_filter()}: A custom color filter
 
-\item \code{alter_fun}: A alter_fun used in ComplexHeatmap
+\item \code{alter_fun()}: A alter_fun used in ComplexHeatmap
 
-\item \code{col_fun_cont}: A color function used in ComplexHeatmap
+\item \code{col_fun_cont()}: A color function used in ComplexHeatmap
 
 \item \code{col_tag}: A col_tag used in ComplexHeatmap (TODO: make sure)
 
 \item \code{mut_cols}: A mapping between mutation type and colors used in ComplexHeatmap (TODO: make sure)
 
-\item \code{draw_map}: Draw a Map
-}}
+\item \code{draw_map()}: Draw a Map
 
+}}
 \examples{
 transparentColor("red")
 custom_color_filter("AAAAAA, CCCCCC")

@@ -24,13 +24,13 @@ Functions to manage the global setting objects
 }
 \section{Functions}{
 \itemize{
-\item \code{globs_list}: list available global objects
+\item \code{globs_list()}: list available global objects
 
-\item \code{globs_get}: get the data from specified global objects
+\item \code{globs_get()}: get the data from specified global objects
 
-\item \code{globs_set}: reassign the specified data (with name) to available global object
+\item \code{globs_set()}: reassign the specified data (with name) to available global object
+
 }}
-
 \examples{
 \dontrun{
 conf <- globs_get("conf")

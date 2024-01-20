@@ -4,12 +4,14 @@
 \alias{system_safe}
 \title{Run system commands}
 \usage{
-system_safe(cmd, print_cmd = TRUE)
+system_safe(cmd, print_cmd = TRUE, conda_env = NULL)
 }
 \arguments{
 \item{cmd}{the command to run.}
 
 \item{print_cmd}{if \code{TRUE}, also print the command.}
+
+\item{conda_env}{set conda env.}
 }
 \description{
 Run system commands

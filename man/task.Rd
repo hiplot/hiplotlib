@@ -27,10 +27,10 @@ Functions and utilities related to hiplot task
 }
 \section{Functions}{
 \itemize{
-\item \code{update_task_status}: Update task status
+\item \code{update_task_status()}: Update task status
 
-\item \code{new_task_step}: Create a task to run
+\item \code{new_task_step()}: Create a task to run
 
-\item \code{run_task_step}: Run a step of a task #TODO What's the difference from above?
+\item \code{run_task_step()}: Run a step of a task #TODO What's the difference from above?
+
 }}
-
