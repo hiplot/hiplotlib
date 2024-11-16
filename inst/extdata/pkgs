@@ -182,7 +182,7 @@ datawizard
 DBI
 dbplyr
 dbscan
-deconstructSigs
+raerose01/deconstructSigs
 DelayedArray
 DelayedMatrixStats
 deldir
@@ -700,7 +700,6 @@ picante
 pillar
 pinfsc50
 pio
-PIONE
 pixmap
 pkgbuild
 pkgconfig
@@ -1133,7 +1132,7 @@ grst/MCPcounter
 grst/mMCPcounter
 cansysbio/ConsensusTME
 jbkunst/d3wordcloud
-hfang-bristol/PIONE
+Miachol/PIONE
 talgalili/d3heatmap
 clindet/anor
 reimandlab/ActiveDriverWGSR
@@ -1167,7 +1166,6 @@ lch14forever/microbiomeViz
 evenrus/mmsig
 PMBio/MuDataSeurat
 fbreitwieser/pavian
-hfang-bristol/PIONE
 gauravsk/ranacapa
 ramnathv/rblocks
 thk686/rgdal2

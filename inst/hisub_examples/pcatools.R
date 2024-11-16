@@ -13,7 +13,7 @@ pacman::p_load(PCAtools)
 # 主成分分析 (PCAtools)
 # @target basic
 # @tag correlation dimension
-# @author Hiplot Team | Jianfeng Li
+# @author Jianfeng Li
 # @email admin@hiplot.org
 # @url https://github.com/kevinblighe/PCAtools
 # @version 0.1.0

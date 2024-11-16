@@ -6,7 +6,6 @@ sudo apt install -y \
     libgmp3-dev libmpfr-dev \
     libfreetype6-dev libpng-dev libtiff5-dev libjpeg-dev \
     poppler-utils \
-    "libglu1-mesa*" \
     locales \
     openssl \
     curl \
@@ -18,16 +17,9 @@ sudo apt install -y \
     gfortran \
     gsfonts \
     libblas-dev \
-    "libbz2-*" \
     libcurl4 \
     liblapack-dev \
-    "libpcre2*" \
-    "libjpeg-turbo*" \
-    "libpangocairo-*" \
-    "libpng16*" \
     libreadline-dev \
-    "libtiff*" \
-    "liblzma*" \
     make \
     tzdata \
     unzip \
@@ -46,7 +38,16 @@ sudo apt install -y \
     libnetcdf-dev \
     libmagick++-dev \
     fftw-dev \
-    libmysqlclient-dev libgdal-dev \
-    fftw3-dev
+    libgdal-dev
 
 
+    #fftw3-dev
+    #libmysqlclient-dev \
+    #"libglu1-mesa*" \
+    #"libbz2-*" \
+   # "libpcre2*" \
+   # "libjpeg-turbo*" \
+   # "libpangocairo-*" \
+   # "libpng16*" \
+   # "libtiff*" \
+   # "liblzma*" \
